@@ -5,22 +5,9 @@ import PlayerCard from "../components/PlayerCard";
 const PlayersPage: React.FC = () => {
   const { players } = usePlayers();
   const [sortBy, setSortBy] = useState<"winrate" | "wins" | "games" | "name">("winrate");
-  const [filterFaction, setFilterFaction] = useState<string>("all");
-
-  const factions: { value: string; label: string }[] = [
-    { value: "all", label: "All Factions" },
-    { value: "space-marines", label: "Space Marines" },
-    { value: "orks", label: "Orks" },
-    { value: "necrons", label: "Necrons" },
-    { value: "tyranids", label: "Tyranids" },
-    { value: "chaos", label: "Chaos" },
-    { value: "eldar", label: "Aeldari" },
-  ];
 
   const getSortedPlayers = () => {
-    let filtered = filterFaction === "all"
-      ? [...players]
-      : players.filter((p) => p.theme === filterFaction);
+    let filtered = [...players];
 
     switch (sortBy) {
       case "winrate":
@@ -71,25 +58,11 @@ const PlayersPage: React.FC = () => {
             <option value="name">Name</option>
           </select>
         </div>
-        <div className="filter-group">
-          <label className="filter-label">Faction:</label>
-          <select
-            className="filter-select"
-            value={filterFaction}
-            onChange={(e) => setFilterFaction(e.target.value)}
-          >
-            {factions.map((f) => (
-              <option key={f.value} value={f.value}>
-                {f.label}
-              </option>
-            ))}
-          </select>
-        </div>
       </div>
 
       <div className="players-grid">
-        {sortedPlayers.map((player, index) => (
-          <PlayerCard key={player.id} player={player} rank={index + 1} />
+        {sortedPlayers.map((player) => (
+          <PlayerCard key={player.id} player={player} />
         ))}
         {sortedPlayers.length === 0 && (
           <div className="no-results">

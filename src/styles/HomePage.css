@@ -169,9 +169,31 @@
   transition: all 0.3s ease;
 }
 
+.game-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+
 .game-card:hover {
   border-color: rgba(255, 215, 0, 0.4);
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.game-card .view-details {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: #ffd600;
+  letter-spacing: 1px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.game-card:hover .view-details {
+  opacity: 1;
 }
 
 .game-date {

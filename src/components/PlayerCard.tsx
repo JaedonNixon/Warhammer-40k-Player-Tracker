@@ -51,7 +51,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, rank }) => {
               {player.name}
             </h3>
             {player.nickname && (
-              <p className="card-nickname" style={{ color: theme.accent }}>
+              <p className="card-nickname">
                 "{player.nickname}"
               </p>
             )}

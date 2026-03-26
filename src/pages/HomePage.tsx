@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { usePlayers } from "../hooks/usePlayers";
 import { getRecentGames } from "../data/games";
 import "../styles/HomePage.css";
@@ -34,7 +35,7 @@ const HomePage: React.FC = () => {
             </div>
             <div className="hero-stat">
               <span className="hero-stat-value">
-                {leaderboard.reduce((sum, p) => sum + p.armies.length, 0)}/25
+                {leaderboard.reduce((sum, p) => sum + p.armies.length, 0)}/30
               </span>
               <span className="hero-stat-label">Armies Fielded</span>
             </div>
@@ -48,7 +49,7 @@ const HomePage: React.FC = () => {
         </h2>
         <div className="recent-games-list">
           {recentGames.map((game) => (
-            <div key={game.id} className="game-card">
+            <Link key={game.id} to={`/history/${game.id}`} className="game-card game-card-link">
               <div className="game-date">
                 {new Date(game.date).toLocaleDateString("en-US", {
                   month: "short",
@@ -69,7 +70,8 @@ const HomePage: React.FC = () => {
                   <span className="player-army">{game.player2Army}</span>
                 </div>
               </div>
-            </div>
+              <div className="view-details">View Details →</div>
+            </Link>
           ))}
         </div>
       </section>

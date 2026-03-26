@@ -1,10 +1,11 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { games } from "../data/games";
 import "../styles/GameDetail.css";
 
 const GameDetailPage: React.FC = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const game = games.find((g) => g.id === Number(id));
 
   if (!game) {
@@ -13,9 +14,9 @@ const GameDetailPage: React.FC = () => {
         <div className="not-found">
           <h2>Battle Record Not Found</h2>
           <p>This battle has been lost to the warp...</p>
-          <Link to="/history" className="back-link">
-            ← Return to Archives
-          </Link>
+          <button onClick={() => navigate(-1)} className="back-link">
+            ← Back
+          </button>
         </div>
       </div>
     );
@@ -30,9 +31,9 @@ const GameDetailPage: React.FC = () => {
 
   return (
     <div className="game-detail-page">
-      <Link to="/history" className="back-link">
-        ← Back to Archives
-      </Link>
+      <button onClick={() => navigate(-1)} className="back-link">
+        ← Back
+      </button>
 
       <header className="game-detail-header">
         <div className="game-detail-date">
