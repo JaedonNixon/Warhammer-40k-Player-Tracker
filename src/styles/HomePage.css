@@ -156,23 +156,24 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 700px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
 .game-card {
+  display: flex;
+  align-items: stretch;
   background: rgba(30, 30, 35, 0.95);
   border: 1px solid rgba(255, 215, 0, 0.2);
   border-radius: 12px;
-  padding: 20px 24px;
+  overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .game-card-link {
   text-decoration: none;
   color: inherit;
-  display: block;
   cursor: pointer;
 }
 
@@ -180,6 +181,33 @@
   border-color: rgba(255, 215, 0, 0.4);
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
   transform: translateY(-3px);
+}
+
+.game-card .card-art {
+  width: 180px;
+  min-height: 100px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.game-card .card-art-left {
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to right, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+}
+
+.game-card .card-art-right {
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+}
+
+.game-card .card-content {
+  flex: 1;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .game-card .view-details {
@@ -256,6 +284,11 @@
 }
 
 @media (max-width: 500px) {
+  .game-card .card-art {
+    width: 60px;
+    min-height: 60px;
+  }
+
   .game-matchup {
     flex-direction: column;
     gap: 8px;

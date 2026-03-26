@@ -16,7 +16,7 @@ export const factionBackgrounds: Partial<Record<Faction, string>> = {
   "deathwatch": `${process.env.PUBLIC_URL}/images/factions/deathwatch-bg.avif`,
   "grey-knights": `${process.env.PUBLIC_URL}/images/factions/grey-knights-bg.jpg`,
   // Imperium
-  "custodes": `${process.env.PUBLIC_URL}/images/factions/custodes-bg.jpg`,
+  "custodes": `${process.env.PUBLIC_URL}/images/factions/custodes-bg.png`,
   "imperial-guard": `${process.env.PUBLIC_URL}/images/factions/imperial-guard-bg.jpg`,
   "adeptus-mechanicus": `${process.env.PUBLIC_URL}/images/factions/adeptus-mechanicus-bg.jpg`,
   "sisters-of-battle": `${process.env.PUBLIC_URL}/images/factions/adepta-sororitas-bg.jpg`,
@@ -38,7 +38,7 @@ export const factionBackgrounds: Partial<Record<Faction, string>> = {
   // Xenos
   "orks": `${process.env.PUBLIC_URL}/images/factions/orks-bg.jpg`,
   "necrons": `${process.env.PUBLIC_URL}/images/factions/necrons-bg.png`,
-  "tyranids": `${process.env.PUBLIC_URL}/images/factions/tyranids-bg.jpg`,
+  "tyranids": `${process.env.PUBLIC_URL}/images/factions/tyranids-bg.png`,
   "tau": `${process.env.PUBLIC_URL}/images/factions/tau-bg.jpg`,
   "dark-eldar": `${process.env.PUBLIC_URL}/images/factions/dark-eldar-bg.jpg`,
   "harlequins": `${process.env.PUBLIC_URL}/images/factions/harlequins-bg.jpg`,

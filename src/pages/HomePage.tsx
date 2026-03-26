@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { usePlayers } from "../hooks/usePlayers";
 import { getRecentGames } from "../data/games";
+import { getArmyBackground } from "../utils/factionBackgrounds";
 import "../styles/HomePage.css";
 
 const HomePage: React.FC = () => {
@@ -50,27 +51,41 @@ const HomePage: React.FC = () => {
         <div className="recent-games-list">
           {recentGames.map((game) => (
             <Link key={game.id} to={`/history/${game.id}`} className="game-card game-card-link">
-              <div className="game-date">
-                {new Date(game.date).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}
+              <div
+                className="card-art card-art-left"
+                style={getArmyBackground(game.player1Army)
+                  ? { backgroundImage: `url(${getArmyBackground(game.player1Army)})` }
+                  : undefined}
+              />
+              <div className="card-content">
+                <div className="game-date">
+                  {new Date(game.date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </div>
+                <div className="game-matchup">
+                  <div className={`game-player ${game.winner === "player1" ? "winner" : ""}`}>
+                    <span className="player-name">{game.player1}</span>
+                    <span className="player-army">{game.player1Army}</span>
+                  </div>
+                  <div className="game-vs">
+                    {game.winner === "draw" ? "DRAW" : "VS"}
+                  </div>
+                  <div className={`game-player ${game.winner === "player2" ? "winner" : ""}`}>
+                    <span className="player-name">{game.player2}</span>
+                    <span className="player-army">{game.player2Army}</span>
+                  </div>
+                </div>
+                <div className="view-details">View Details →</div>
               </div>
-              <div className="game-matchup">
-                <div className={`game-player ${game.winner === "player1" ? "winner" : ""}`}>
-                  <span className="player-name">{game.player1}</span>
-                  <span className="player-army">{game.player1Army}</span>
-                </div>
-                <div className="game-vs">
-                  {game.winner === "draw" ? "DRAW" : "VS"}
-                </div>
-                <div className={`game-player ${game.winner === "player2" ? "winner" : ""}`}>
-                  <span className="player-name">{game.player2}</span>
-                  <span className="player-army">{game.player2Army}</span>
-                </div>
-              </div>
-              <div className="view-details">View Details →</div>
+              <div
+                className="card-art card-art-right"
+                style={getArmyBackground(game.player2Army)
+                  ? { backgroundImage: `url(${getArmyBackground(game.player2Army)})` }
+                  : undefined}
+              />
             </Link>
           ))}
         </div>
