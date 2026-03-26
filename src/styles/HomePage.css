@@ -1,0 +1,146 @@
+/* === HERO === */
+.hero-section {
+  text-align: center;
+  padding: 60px 20px 40px;
+  background:
+    radial-gradient(ellipse at center, rgba(255, 214, 0, 0.05) 0%, transparent 70%);
+}
+
+.hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-emblem {
+  font-size: 4rem;
+  margin-bottom: 10px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.85; }
+}
+
+.hero-title {
+  font-family: "Cinzel", serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: 8px;
+  color: #ffd600;
+  text-shadow: 0 0 30px rgba(255, 214, 0, 0.3);
+}
+
+.hero-subtitle {
+  color: #888;
+  font-style: italic;
+  margin-top: 12px;
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 1px;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat-value {
+  display: block;
+  font-family: "Cinzel", serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #ffd600;
+}
+
+.hero-stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.hero-cta {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 32px;
+  border: 2px solid #ffd600;
+  border-radius: 8px;
+  color: #ffd600;
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.hero-cta:hover {
+  background: #ffd600;
+  color: #0a0a0a;
+  box-shadow: 0 0 20px rgba(255, 214, 0, 0.4);
+}
+
+/* === LEADERBOARD === */
+.leaderboard-section,
+.recent-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.section-heading {
+  font-family: "Cinzel", serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffd600;
+  letter-spacing: 3px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.heading-icon {
+  margin-right: 8px;
+}
+
+.section-cta {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.view-all-link {
+  color: #ffd600;
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.view-all-link:hover {
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2.2rem;
+    letter-spacing: 4px;
+  }
+
+  .hero-stat-value {
+    font-size: 1.8rem;
+  }
+
+  .hero-stats {
+    gap: 20px;
+  }
+}
