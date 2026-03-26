@@ -91,8 +91,8 @@ export const players: Player[] = [
     joinedDate: "2026-03-26",
   },
   {
-    id: "aaron-dewapenare",
-    name: "Aaron Dewapenare",
+    id: "aaron-dewapenaere",
+    name: "Aaron Dewapenaere",
     avatar: "🐺",
     theme: "space-wolves",
     totalWins: 0,

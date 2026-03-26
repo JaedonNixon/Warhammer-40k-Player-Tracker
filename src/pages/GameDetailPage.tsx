@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { games } from "../data/games";
+import { getArmyBackground } from "../utils/factionBackgrounds";
 import "../styles/GameDetail.css";
 
 const GameDetailPage: React.FC = () => {
@@ -31,6 +32,18 @@ const GameDetailPage: React.FC = () => {
 
   return (
     <div className="game-detail-page">
+      {getArmyBackground(game.player1Army) && (
+        <div
+          className="page-bg page-bg-left"
+          style={{ backgroundImage: `url(${getArmyBackground(game.player1Army)})` }}
+        />
+      )}
+      {getArmyBackground(game.player2Army) && (
+        <div
+          className="page-bg page-bg-right"
+          style={{ backgroundImage: `url(${getArmyBackground(game.player2Army)})` }}
+        />
+      )}
       <button onClick={() => navigate(-1)} className="back-link">
         ← Back
       </button>

@@ -85,9 +85,11 @@ a {
 }
 
 .brand-subtitle {
-  font-size: 0.65rem;
-  color: #888;
-  letter-spacing: 2px;
+  font-family: "Barlow", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #aaa;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   display: none;
 }
@@ -304,14 +306,30 @@ a {
 }
 
 .back-link {
-  color: #ffd600;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  transition: color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1a1a1f;
+  background: #ffd600;
+  font-family: "Cinzel", serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: 6px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 10px rgba(255, 214, 0, 0.3);
 }
 
 .back-link:hover {
-  color: #fff;
+  background: #ffe63d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(255, 214, 0, 0.45);
+  color: #1a1a1f;
 }
 
 /* === NO RESULTS === */

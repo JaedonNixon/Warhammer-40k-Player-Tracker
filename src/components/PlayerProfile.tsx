@@ -2,8 +2,8 @@ import React from "react";
 import { Player } from "../types";
 import { usePlayers } from "../hooks/usePlayers";
 import { getThemeColors } from "../styles/themes";
-import { factionBackgrounds } from "../utils/factionBackgrounds";
-import WinLossChart from "./WinLossChart";
+import { factionBackgrounds, getFavoriteArmyImagePosition } from "../utils/factionBackgrounds";
+import PlayerGameHistory from "./PlayerGameHistory";
 import ArmyList from "./ArmyList";
 import "../styles/PlayerProfile.css";
 
@@ -19,10 +19,11 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ player }) => {
 
   // Get the player's top army (most games played)
   const topArmy = player.armies.length > 0
-    ? [...player.armies].sort((a, b) => b.gamesPlayed - a.gamesPlayed)[0]
+    ? player.armies.reduce((best, a) => a.gamesPlayed > best.gamesPlayed ? a : best, player.armies[0])
     : null;
   
   const backgroundImage = topArmy ? factionBackgrounds[topArmy.faction] : null;
+  const backgroundPosition = getFavoriteArmyImagePosition(player.armies);
 
   return (
     <div
@@ -34,7 +35,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ player }) => {
       {backgroundImage && (
         <div 
           className="profile-faction-bg"
-          style={{ backgroundImage: `url(${backgroundImage})` }}
+          style={{ backgroundImage: `url(${backgroundImage})`, backgroundPosition }}
         />
       )}
       <div
@@ -96,9 +97,9 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ player }) => {
       <div className="profile-content-grid">
         <div className="profile-chart-section" style={{ borderColor: theme.primary }}>
           <h3 className="section-title" style={{ color: theme.primary }}>
-            📊 Battle Record
+            ⚔️ Battle History
           </h3>
-          <WinLossChart player={player} />
+          <PlayerGameHistory player={player} theme={theme} />
         </div>
         <div className="profile-army-section" style={{ borderColor: theme.primary }}>
           <ArmyList armies={player.armies} theme={theme} />

@@ -42,8 +42,8 @@ const ArmyList: React.FC<ArmyListProps> = ({ armies, theme }) => {
                     {army.name}
                   </h4>
                   <div className="army-stats-row">
-                    <span className="army-stat">
-                      <span className="stat-icon">🎮</span> {army.gamesPlayed} games
+                    <span className="army-stat games-played" style={{ color: armyTheme.primary }}>
+                      {army.gamesPlayed} <span className="games-label">Games</span>
                     </span>
                     <span className="army-stat win">
                       <span className="stat-icon">✅</span> {army.wins}W

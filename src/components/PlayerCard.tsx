@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Player } from "../types";
 import { usePlayers } from "../hooks/usePlayers";
 import { getThemeColors } from "../styles/themes";
-import { getFavoriteArmyBackground } from "../utils/factionBackgrounds";
+import { getFavoriteArmyBackground, getFavoriteArmyImagePosition } from "../utils/factionBackgrounds";
 import "../styles/PlayerCard.css";
 
 interface PlayerCardProps {
@@ -17,6 +17,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, rank }) => {
   const winRate = getWinRate(player);
   const totalGames = getTotalGames(player);
   const factionImage = getFavoriteArmyBackground(player.armies);
+  const factionImagePosition = getFavoriteArmyImagePosition(player.armies);
 
   return (
     <Link to={`/players/${player.id}`} className="player-card-link">
@@ -41,6 +42,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player, rank }) => {
                 src={factionImage} 
                 alt="Faction" 
                 className="avatar-faction-img"
+                style={{ objectPosition: factionImagePosition }}
               />
             ) : (
               <div className="avatar-placeholder" style={{ backgroundColor: theme.primary }} />

@@ -87,6 +87,7 @@
 }
 
 .card-nickname {
+  font-family: "Barlow", sans-serif;
   font-size: 0.9rem;
   font-style: italic;
   font-weight: 500;

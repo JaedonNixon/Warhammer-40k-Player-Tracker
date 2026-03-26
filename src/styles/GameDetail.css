@@ -3,25 +3,65 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 20px 20px 60px;
+  position: relative;
+}
+
+/* Full-page faction background panels */
+.page-bg {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 35%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page-bg-left {
+  left: 0;
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+}
+
+.page-bg-right {
+  right: 0;
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+}
+
+.game-detail-page > *:not(.page-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .back-link {
-  display: inline-block;
-  color: #ffd600;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-  transition: color 0.3s;
-  background: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1a1a1f;
+  background: #ffd600;
+  font-family: "Cinzel", serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: 6px;
+  text-decoration: none;
   border: none;
   cursor: pointer;
-  padding: 0;
-  font-family: inherit;
-  text-decoration: none;
+  margin-bottom: 20px;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 10px rgba(255, 214, 0, 0.3);
 }
 
 .back-link:hover {
-  color: #fff;
+  background: #ffe63d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(255, 214, 0, 0.45);
+  color: #1a1a1f;
 }
 
 /* === HEADER === */

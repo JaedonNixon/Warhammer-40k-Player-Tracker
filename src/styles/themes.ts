@@ -122,14 +122,14 @@ const themes: Record<string, ThemeColors> = {
     glow: "#ffd600",
   },
   tau: {
-    primary: "#ff6d00",
+    primary: "#ff9100",
     secondary: "#e65100",
-    accent: "#ffab40",
+    accent: "#ffcc40",
     background: "#140e08",
     cardBg: "#1a1410",
     text: "#fff3e0",
-    border: "#ff6d00",
-    glow: "#ff6d00",
+    border: "#ff9100",
+    glow: "#ff9100",
   },
   "imperial-guard": {
     primary: "#8d6e63",
@@ -162,14 +162,14 @@ const themes: Record<string, ThemeColors> = {
     glow: "#ff1744",
   },
   "thousand-sons": {
-    primary: "#1a237e",
-    secondary: "#0d47a1",
-    accent: "#7c4dff",
+    primary: "#4fc3f7",
+    secondary: "#0288d1",
+    accent: "#ffd54f",
     background: "#08081a",
     cardBg: "#0f0f25",
     text: "#e8eaf6",
-    border: "#1a237e",
-    glow: "#7c4dff",
+    border: "#4fc3f7",
+    glow: "#4fc3f7",
   },
   // Additional Space Marine Chapters
   "iron-hands": {

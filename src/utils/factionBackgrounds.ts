@@ -37,7 +37,7 @@ export const factionBackgrounds: Partial<Record<Faction, string>> = {
   "tzeentch-daemons": `${process.env.PUBLIC_URL}/images/factions/tzeentch-bg.jpg`,
   // Xenos
   "orks": `${process.env.PUBLIC_URL}/images/factions/orks-bg.jpg`,
-  "necrons": `${process.env.PUBLIC_URL}/images/factions/necrons-bg.jpg`,
+  "necrons": `${process.env.PUBLIC_URL}/images/factions/necrons-bg.png`,
   "tyranids": `${process.env.PUBLIC_URL}/images/factions/tyranids-bg.jpg`,
   "tau": `${process.env.PUBLIC_URL}/images/factions/tau-bg.jpg`,
   "dark-eldar": `${process.env.PUBLIC_URL}/images/factions/dark-eldar-bg.jpg`,
@@ -46,9 +46,67 @@ export const factionBackgrounds: Partial<Record<Faction, string>> = {
   "genestealer-cults": `${process.env.PUBLIC_URL}/images/factions/genestealer-cults-bg.avif`,
 };
 
+// Map army display names to faction IDs
+const armyNameToFaction: Record<string, Faction> = {
+  "Black Templars": "black-templars",
+  "Dark Angels": "dark-angels",
+  "Ultramarines": "ultramarines",
+  "Imperial Fists": "imperial-fists",
+  "Space Wolves": "space-wolves",
+  "Iron Hands": "iron-hands",
+  "Raven Guard": "raven-guard",
+  "Salamanders": "salamanders",
+  "White Scars": "white-scars",
+  "Deathwatch": "deathwatch",
+  "Grey Knights": "grey-knights",
+  "Adeptus Custodes": "custodes",
+  "Astra Militarum": "imperial-guard",
+  "Imperial Guard": "imperial-guard",
+  "Adeptus Mechanicus": "adeptus-mechanicus",
+  "Sisters of Battle": "sisters-of-battle",
+  "Adepta Sororitas": "adepta-sororitas",
+  "Imperial Knights": "imperial-knights",
+  "Death Guard": "death-guard",
+  "World Eaters": "world-eaters",
+  "Thousand Sons": "thousand-sons",
+  "Chaos Knights": "chaos-knights",
+  "Nurgle Daemons": "nurgle-daemons",
+  "Khorne Daemons": "khorne-daemons",
+  "Slaanesh Daemons": "slaanesh-daemons",
+  "Tzeentch Daemons": "tzeentch-daemons",
+  "Orks": "orks",
+  "Necrons": "necrons",
+  "Tyranids": "tyranids",
+  "T'au Empire": "tau",
+  "Tau": "tau",
+  "Dark Eldar": "dark-eldar",
+  "Drukhari": "dark-eldar",
+  "Harlequins": "harlequins",
+  "Ynnari": "ynnari",
+  "Genestealer Cults": "genestealer-cults",
+};
+
+// Get the faction background image URL from an army display name
+export function getArmyBackground(armyName: string): string | null {
+  const faction = armyNameToFaction[armyName];
+  if (!faction) return null;
+  return factionBackgrounds[faction] || null;
+}
+
 // Get the background image for a player's favorite (most-played) army
 export function getFavoriteArmyBackground(armies: { gamesPlayed: number; faction: Faction }[]): string | null {
   if (armies.length === 0) return null;
-  const topArmy = [...armies].sort((a, b) => b.gamesPlayed - a.gamesPlayed)[0];
+  const topArmy = armies.reduce((best, a) => a.gamesPlayed > best.gamesPlayed ? a : best, armies[0]);
   return factionBackgrounds[topArmy.faction] || null;
+}
+
+// Per-faction image focal point overrides (CSS object-position)
+const factionImagePositions: Partial<Record<Faction, string>> = {
+  "custodes": "70% 15%",
+};
+
+export function getFavoriteArmyImagePosition(armies: { gamesPlayed: number; faction: Faction }[]): string {
+  if (armies.length === 0) return "center";
+  const topArmy = armies.reduce((best, a) => a.gamesPlayed > best.gamesPlayed ? a : best, armies[0]);
+  return factionImagePositions[topArmy.faction] || "center";
 }

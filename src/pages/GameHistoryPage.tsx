@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { getAllGames, Game } from "../data/games";
+import { getArmyBackground } from "../utils/factionBackgrounds";
 import "../styles/GameHistory.css";
 
 const GameHistoryPage: React.FC = () => {
@@ -44,36 +45,49 @@ const GameHistoryPage: React.FC = () => {
                 to={`/history/${game.id}`}
                 className="history-game-card"
               >
-                <div className="game-date">
-                  {new Date(game.date).toLocaleDateString("en-US", {
-                    weekday: "short",
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                  <span className="game-turns">Turn {game.finalTurn}</span>
-                </div>
-                <div className="game-matchup">
-                  <div className={`game-player ${game.winner === "player1" ? "winner" : ""}`}>
-                    <span className="player-name">{game.player1}</span>
-                    <span className="player-army">{game.player1Army}</span>
-                    <span className="player-final-score">{finalScores.p1} pts</span>
-                    {game.winner === "player1" && <span className="winner-badge">VICTORY</span>}
+                <div
+                  className="card-art card-art-left"
+                  style={getArmyBackground(game.player1Army)
+                    ? { backgroundImage: `url(${getArmyBackground(game.player1Army)})` }
+                    : undefined}
+                />
+                <div className="card-content">
+                  <div className="game-date">
+                    {new Date(game.date).toLocaleDateString("en-US", {
+                      weekday: "short",
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                    <span className="game-turns">Turn {game.finalTurn}</span>
                   </div>
-                  <div className="game-vs">
-                    {game.winner === "draw" ? "DRAW" : "VS"}
+                  <div className="game-matchup">
+                    <div className={`game-player ${game.winner === "player1" ? "winner" : ""}`}>
+                      <span className="player-name">{game.player1}</span>
+                      <span className="player-army">{game.player1Army}</span>
+                      <span className="player-final-score">{finalScores.p1} pts</span>
+                      {game.winner === "player1" && <span className="winner-badge">VICTORY</span>}
+                    </div>
+                    <div className="game-vs">
+                      {game.winner === "draw" ? "DRAW" : "VS"}
+                    </div>
+                    <div className={`game-player ${game.winner === "player2" ? "winner" : ""}`}>
+                      <span className="player-name">{game.player2}</span>
+                      <span className="player-army">{game.player2Army}</span>
+                      <span className="player-final-score">{finalScores.p2} pts</span>
+                      {game.winner === "player2" && <span className="winner-badge">VICTORY</span>}
+                    </div>
                   </div>
-                  <div className={`game-player ${game.winner === "player2" ? "winner" : ""}`}>
-                    <span className="player-name">{game.player2}</span>
-                    <span className="player-army">{game.player2Army}</span>
-                    <span className="player-final-score">{finalScores.p2} pts</span>
-                    {game.winner === "player2" && <span className="winner-badge">VICTORY</span>}
+                  <div className="view-details">
+                    View Details →
                   </div>
                 </div>
-
-                <div className="view-details">
-                  View Details →
-                </div>
+                <div
+                  className="card-art card-art-right"
+                  style={getArmyBackground(game.player2Army)
+                    ? { backgroundImage: `url(${getArmyBackground(game.player2Army)})` }
+                    : undefined}
+                />
               </Link>
             );
           })
