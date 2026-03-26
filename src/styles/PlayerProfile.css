@@ -1,7 +1,41 @@
 .player-profile {
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(25, 25, 30, 0.95);
+  position: relative;
+}
+
+/* === FACTION BACKGROUND ART === */
+.profile-faction-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center right;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Dark overlay for better contrast */
+.profile-faction-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+}
+
+.profile-banner,
+.profile-stats-overview,
+.profile-content-grid {
+  position: relative;
+  z-index: 1;
 }
 
 /* === BANNER === */
@@ -70,7 +104,7 @@
   flex-wrap: wrap;
   gap: 16px;
   padding: 30px 20px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .overview-stat {
@@ -78,6 +112,7 @@
   padding: 16px 24px;
   border: 1px solid;
   border-radius: 10px;
+  background: rgba(30, 30, 35, 0.8);
   background: rgba(255, 255, 255, 0.02);
   min-width: 110px;
   transition: transform 0.3s, box-shadow 0.3s;
@@ -232,7 +267,7 @@
 
 .winrate-label {
   display: block;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Cinzel', serif;
   font-size: 0.6rem;
   font-weight: 400;
   text-transform: uppercase;

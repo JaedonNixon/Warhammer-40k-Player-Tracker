@@ -1,0 +1,328 @@
+/* === GAME HISTORY PAGE === */
+.game-history-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+}
+
+.history-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.history-stat {
+  text-align: center;
+  padding: 16px 30px;
+  background: rgba(30, 30, 35, 0.95);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 10px;
+}
+
+.history-stat .stat-value {
+  display: block;
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffd600;
+}
+
+.history-stat .stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* === GAME LIST === */
+.game-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-game-card {
+  background: rgba(30, 30, 35, 0.95);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 12px;
+  padding: 20px 24px;
+  transition: all 0.3s ease;
+}
+
+.history-game-card:hover {
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+.history-game-card .game-date {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.history-game-card .game-matchup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.history-game-card .game-player {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  position: relative;
+}
+
+.history-game-card .game-player.winner {
+  background: rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.history-game-card .game-player .player-name {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #e8e8e8;
+  letter-spacing: 1px;
+}
+
+.history-game-card .game-player.winner .player-name {
+  color: #4caf50;
+}
+
+.history-game-card .game-player .player-army {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 4px;
+}
+
+.history-game-card .game-vs {
+  font-family: "Cinzel", serif;
+  font-weight: 900;
+  font-size: 1rem;
+  color: #ffd600;
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+
+.winner-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #4caf50;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+/* === SURRENDER STYLING === */
+.history-game-card .game-player.surrendered {
+  background: rgba(244, 67, 54, 0.15);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.history-game-card .game-player.surrendered .player-name {
+  color: #f44336;
+}
+
+.history-game-card .game-player.surrendered .player-final-score {
+  color: #f44336;
+}
+
+.surrender-badge {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: #f44336;
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: 700;
+  padding: 4px 6px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+.surrender-tag {
+  font-size: 0.65rem;
+  color: #f44336;
+  background: rgba(244, 67, 54, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.no-games {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+  font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .history-game-card .game-matchup {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .history-game-card .game-player {
+    width: 100%;
+  }
+
+  .history-game-card .game-vs {
+    padding: 8px 0;
+  }
+}
+
+/* === GAME CARD AS LINK === */
+.history-game-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.game-date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.game-turns {
+  font-size: 0.7rem;
+  color: #ffd600;
+  background: rgba(255, 215, 0, 0.15);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.player-final-score {
+  font-family: "Cinzel", serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffd600;
+  margin-top: 8px;
+}
+
+.game-player.winner .player-final-score {
+  color: #4caf50;
+}
+
+.view-details {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 16px;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+.history-game-card:hover .view-details {
+  color: #ffd600;
+}
+
+/* === GAME DETAILS PANEL === */
+.game-details {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.details-title {
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffd600;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.turn-scores {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.turn-header,
+.turn-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr;
+  text-align: center;
+  padding: 10px 16px;
+}
+
+.turn-header {
+  background: rgba(255, 215, 0, 0.1);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #aaa;
+  font-weight: 600;
+}
+
+.turn-label,
+.score-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.turn-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.turn-row:last-child {
+  border-bottom: none;
+  background: rgba(255, 215, 0, 0.08);
+}
+
+.turn-number {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  color: #888;
+}
+
+.turn-score {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #e8e8e8;
+}
+
+.turn-score.winner-score {
+  color: #4caf50;
+}
+
+.game-ended {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: #888;
+  font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .turn-header,
+  .turn-row {
+    grid-template-columns: 50px 1fr 1fr;
+    padding: 8px 12px;
+  }
+
+  .score-label {
+    font-size: 0.65rem;
+  }
+}

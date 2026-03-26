@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
       <div className="navbar-container">
         <Link to="/" className="navbar-brand">
           <span className="brand-icon">⚔️</span>
-          <span className="brand-text">WAR LEDGER</span>
+          <span className="brand-text">HAM TRACKER</span>
           <span className="brand-subtitle">40K Battle Tracker</span>
         </Link>
 
@@ -36,6 +36,13 @@ const Navbar: React.FC = () => {
             onClick={() => setMenuOpen(false)}
           >
             <span className="nav-icon">👥</span> Players
+          </Link>
+          <Link
+            to="/history"
+            className={`nav-link ${isActive("/history") ? "active" : ""}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            <span className="nav-icon">📜</span> History
           </Link>
         </div>
       </div>

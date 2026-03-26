@@ -8,11 +8,12 @@
 }
 
 body {
-  font-family: "Roboto", sans-serif;
-  background: #0a0a0a;
-  color: #e0e0e0;
+  font-family: 'IM Fell English', 'Almendra', Georgia, serif;
+  background: #1a1a1f;
+  color: #e8e8e8;
   min-height: 100vh;
   overflow-x: hidden;
+  letter-spacing: 0.02em;
 }
 
 a {
@@ -33,9 +34,9 @@ a {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(30, 30, 60, 0.3) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 50%, rgba(60, 20, 20, 0.2) 0%, transparent 60%),
-    #0a0a0a;
+    radial-gradient(ellipse at 20% 50%, rgba(50, 50, 90, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(90, 40, 40, 0.2) 0%, transparent 60%),
+    #1a1a1f;
 }
 
 .main-content {
@@ -50,8 +51,8 @@ a {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(10, 10, 10, 0.95);
-  border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+  background: rgba(20, 20, 25, 0.97);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.4);
   backdrop-filter: blur(10px);
 }
 
@@ -132,7 +133,7 @@ a {
   left: 0;
   right: 0;
   flex-direction: column;
-  background: rgba(10, 10, 10, 0.98);
+  background: rgba(20, 20, 25, 0.98);
   padding: 20px;
   border-bottom: 1px solid rgba(255, 215, 0, 0.3);
 }
@@ -180,13 +181,13 @@ a {
 .app-footer {
   text-align: center;
   padding: 30px 20px;
-  border-top: 1px solid rgba(255, 215, 0, 0.15);
-  background: rgba(5, 5, 5, 0.8);
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  background: rgba(15, 15, 18, 0.9);
   margin-top: 60px;
 }
 
 .app-footer p {
-  color: #666;
+  color: #888;
   font-size: 0.85rem;
   letter-spacing: 1px;
 }
@@ -194,7 +195,7 @@ a {
 .footer-sub {
   margin-top: 5px;
   font-size: 0.75rem !important;
-  color: #444 !important;
+  color: #666 !important;
 }
 
 /* === PAGES COMMON === */
@@ -216,7 +217,7 @@ a {
 }
 
 .page-description {
-  color: #888;
+  color: #aaa;
   margin-top: 8px;
   font-style: italic;
   letter-spacing: 1px;
@@ -245,9 +246,9 @@ a {
 }
 
 .filter-select {
-  background: #1a1a1a;
+  background: #252528;
   color: #e0e0e0;
-  border: 1px solid #333;
+  border: 1px solid #404045;
   padding: 8px 16px;
   border-radius: 6px;
   font-size: 0.9rem;

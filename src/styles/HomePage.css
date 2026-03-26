@@ -1,7 +1,7 @@
 /* === HERO === */
 .hero-section {
   text-align: center;
-  padding: 60px 20px 40px;
+  padding: 30px 20px 20px;
   background:
     radial-gradient(ellipse at center, rgba(255, 214, 0, 0.05) 0%, transparent 70%);
 }
@@ -32,10 +32,11 @@
 }
 
 .hero-subtitle {
-  color: #888;
+  color: #aaa;
+  font-family: 'IM Fell English', Georgia, serif;
   font-style: italic;
   margin-top: 12px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1.6;
   letter-spacing: 1px;
 }
@@ -44,12 +45,15 @@
   display: flex;
   justify-content: center;
   gap: 40px;
-  margin: 30px 0;
+  margin: 20px 0;
   flex-wrap: wrap;
 }
 
 .hero-stat {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-stat-value {
@@ -61,10 +65,12 @@
 }
 
 .hero-stat-label {
+  display: block;
+  font-family: 'Cinzel', serif;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #666;
+  color: #888;
   margin-top: 4px;
 }
 
@@ -142,5 +148,102 @@
 
   .hero-stats {
     gap: 20px;
+  }
+}
+
+/* === RECENT GAMES === */
+.recent-games-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.game-card {
+  background: rgba(30, 30, 35, 0.95);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 12px;
+  padding: 20px 24px;
+  transition: all 0.3s ease;
+}
+
+.game-card:hover {
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+.game-date {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.game-matchup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.game-player {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.game-player.winner {
+  background: rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.game-player .player-name {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #e8e8e8;
+  letter-spacing: 1px;
+}
+
+.game-player.winner .player-name {
+  color: #4caf50;
+}
+
+.game-player .player-army {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 4px;
+}
+
+.game-vs {
+  font-family: "Cinzel", serif;
+  font-weight: 900;
+  font-size: 0.9rem;
+  color: #ffd600;
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 500px) {
+  .game-matchup {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .game-player {
+    width: 100%;
+  }
+
+  .game-vs {
+    padding: 8px 0;
   }
 }

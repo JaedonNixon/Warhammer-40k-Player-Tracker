@@ -1,0 +1,349 @@
+/* === GAME DETAIL PAGE === */
+.game-detail-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 20px 60px;
+}
+
+.back-link {
+  display: inline-block;
+  color: #ffd600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  transition: color 0.3s;
+}
+
+.back-link:hover {
+  color: #fff;
+}
+
+/* === HEADER === */
+.game-detail-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.game-detail-date {
+  font-size: 0.85rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.game-detail-title {
+  font-family: "Cinzel", serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #ffd600;
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+}
+
+.game-detail-turn-info {
+  font-size: 1rem;
+  color: #888;
+  font-style: italic;
+}
+
+/* === MATCHUP SECTION === */
+.game-detail-matchup {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  margin-bottom: 50px;
+}
+
+.detail-player {
+  flex: 1;
+  max-width: 320px;
+  background: rgba(30, 30, 35, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 30px 24px;
+  text-align: center;
+  position: relative;
+}
+
+.detail-player.winner {
+  border-color: rgba(76, 175, 80, 0.5);
+  background: linear-gradient(180deg, rgba(76, 175, 80, 0.15), rgba(30, 30, 35, 0.95));
+}
+
+.victory-banner {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4caf50;
+  color: #fff;
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 20px;
+  border-radius: 20px;
+  letter-spacing: 2px;
+}
+
+.detail-player.surrendered {
+  border-color: rgba(244, 67, 54, 0.5);
+  background: linear-gradient(180deg, rgba(244, 67, 54, 0.15), rgba(30, 30, 35, 0.95));
+}
+
+.surrender-banner {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f44336;
+  color: #fff;
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 20px;
+  border-radius: 20px;
+  letter-spacing: 2px;
+}
+
+.detail-player.surrendered .detail-player-name {
+  color: #f44336;
+}
+
+.detail-player.surrendered .detail-player-score {
+  color: #f44336;
+}
+
+.detail-player-name {
+  font-family: "Cinzel", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #e8e8e8;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.detail-player.winner .detail-player-name {
+  color: #4caf50;
+}
+
+.detail-player-army {
+  font-size: 0.95rem;
+  color: #888;
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
+.detail-player-score {
+  font-family: "Cinzel", serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #ffd600;
+  line-height: 1;
+}
+
+.detail-player.winner .detail-player-score {
+  color: #4caf50;
+}
+
+.detail-score-label {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.detail-vs {
+  display: flex;
+  align-items: center;
+  font-family: "Cinzel", serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #ffd600;
+  letter-spacing: 2px;
+}
+
+.draw-badge {
+  background: rgba(255, 152, 0, 0.2);
+  border: 1px solid #ff9800;
+  color: #ff9800;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* === SCORING SECTION === */
+.game-detail-scoring,
+.game-detail-notes {
+  background: rgba(30, 30, 35, 0.95);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-family: "Cinzel", serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffd600;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.scoring-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.scoring-header,
+.scoring-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 80px;
+  text-align: center;
+  padding: 14px 16px;
+}
+
+.scoring-header {
+  background: rgba(255, 215, 0, 0.1);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #aaa;
+  font-weight: 600;
+}
+
+.scoring-row {
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.scoring-row:last-child {
+  border-bottom: none;
+  background: rgba(255, 215, 0, 0.08);
+}
+
+.scoring-row:nth-child(even) {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.scoring-row:last-child {
+  background: rgba(255, 215, 0, 0.08);
+}
+
+.col-turn {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  color: #888;
+}
+
+.col-player {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #e8e8e8;
+}
+
+.col-player.winner-col {
+  color: #4caf50;
+}
+
+.col-diff {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  color: #888;
+}
+
+.col-diff.positive {
+  color: #4caf50;
+}
+
+.col-diff.negative {
+  color: #f44336;
+}
+
+/* === SURRENDER ROW === */
+.scoring-row.surrender-row {
+  background: rgba(255, 152, 0, 0.15) !important;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: 4px;
+}
+
+.col-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.surrender-marker {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #ff9800;
+  background: rgba(255, 152, 0, 0.25);
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+/* === NOTES SECTION === */
+.placeholder-content {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-style: italic;
+}
+
+/* === NOT FOUND === */
+.game-detail-page .not-found {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.game-detail-page .not-found h2 {
+  font-family: "Cinzel", serif;
+  font-size: 1.8rem;
+  color: #ffd600;
+  margin-bottom: 12px;
+}
+
+.game-detail-page .not-found p {
+  color: #888;
+  font-style: italic;
+  margin-bottom: 24px;
+}
+
+/* === MOBILE === */
+@media (max-width: 700px) {
+  .game-detail-matchup {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .detail-player {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .detail-vs {
+    padding: 16px 0;
+  }
+
+  .scoring-header,
+  .scoring-row {
+    grid-template-columns: 50px 1fr 1fr 60px;
+    padding: 12px 10px;
+  }
+
+  .col-player {
+    font-size: 1rem;
+  }
+
+  .game-detail-title {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+  }
+}

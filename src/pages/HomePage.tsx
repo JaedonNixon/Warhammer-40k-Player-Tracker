@@ -1,29 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { usePlayers } from "../hooks/usePlayers";
-import PlayerCard from "../components/PlayerCard";
+import { getRecentGames } from "../data/games";
 import "../styles/HomePage.css";
 
 const HomePage: React.FC = () => {
   const { getLeaderboard } = usePlayers();
   const leaderboard = getLeaderboard();
-  const topPlayers = leaderboard.slice(0, 3);
+  const recentGames = getRecentGames(3);
 
   return (
     <div className="home-page">
       <section className="hero-section">
         <div className="hero-content">
-          <div className="hero-emblem">⚔️</div>
-          <h1 className="hero-title">WAR LEDGER</h1>
+          <h1 className="hero-title">HAM TRACKER</h1>
           <p className="hero-subtitle">
-            In the grim darkness of the far future, there is only war...
+            "To forget history is to forget purpose. Record all. Forget nothing."
             <br />
-            and meticulous record keeping.
+            — Remembrancer's Creed
           </p>
           <div className="hero-stats">
             <div className="hero-stat">
               <span className="hero-stat-value">{leaderboard.length}</span>
-              <span className="hero-stat-label">Warriors</span>
+              <span className="hero-stat-label">Members</span>
             </div>
             <div className="hero-stat">
               <span className="hero-stat-value">
@@ -36,44 +34,43 @@ const HomePage: React.FC = () => {
             </div>
             <div className="hero-stat">
               <span className="hero-stat-value">
-                {leaderboard.reduce(
-                  (sum, p) => sum + p.armies.length,
-                  0
-                )}
+                {leaderboard.reduce((sum, p) => sum + p.armies.length, 0)}/25
               </span>
               <span className="hero-stat-label">Armies Fielded</span>
             </div>
           </div>
-          <Link to="/players" className="hero-cta">
-            View All Players →
-          </Link>
-        </div>
-      </section>
-
-      <section className="leaderboard-section">
-        <h2 className="section-heading">
-          <span className="heading-icon">🏆</span> Top Commanders
-        </h2>
-        <div className="top-players-grid">
-          {topPlayers.map((player, index) => (
-            <PlayerCard key={player.id} player={player} rank={index + 1} />
-          ))}
         </div>
       </section>
 
       <section className="recent-section">
         <h2 className="section-heading">
-          <span className="heading-icon">📋</span> All Warriors
+          <span className="heading-icon">⚔️</span> Recent Battles
         </h2>
-        <div className="all-players-grid">
-          {leaderboard.map((player) => (
-            <PlayerCard key={player.id} player={player} />
+        <div className="recent-games-list">
+          {recentGames.map((game) => (
+            <div key={game.id} className="game-card">
+              <div className="game-date">
+                {new Date(game.date).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </div>
+              <div className="game-matchup">
+                <div className={`game-player ${game.winner === "player1" ? "winner" : ""}`}>
+                  <span className="player-name">{game.player1}</span>
+                  <span className="player-army">{game.player1Army}</span>
+                </div>
+                <div className="game-vs">
+                  {game.winner === "draw" ? "DRAW" : "VS"}
+                </div>
+                <div className={`game-player ${game.winner === "player2" ? "winner" : ""}`}>
+                  <span className="player-name">{game.player2}</span>
+                  <span className="player-army">{game.player2Army}</span>
+                </div>
+              </div>
+            </div>
           ))}
-        </div>
-        <div className="section-cta">
-          <Link to="/players" className="view-all-link">
-            View Full Roster →
-          </Link>
         </div>
       </section>
     </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { Player } from "../types";
 import { usePlayers } from "../hooks/usePlayers";
 import { getThemeColors } from "../styles/themes";
+import { factionBackgrounds } from "../utils/factionBackgrounds";
 import WinLossChart from "./WinLossChart";
 import ArmyList from "./ArmyList";
 import "../styles/PlayerProfile.css";
@@ -16,23 +17,33 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ player }) => {
   const winRate = getWinRate(player);
   const totalGames = getTotalGames(player);
 
+  // Get the player's top army (most games played)
+  const topArmy = player.armies.length > 0
+    ? [...player.armies].sort((a, b) => b.gamesPlayed - a.gamesPlayed)[0]
+    : null;
+  
+  const backgroundImage = topArmy ? factionBackgrounds[topArmy.faction] : null;
+
   return (
     <div
       className="player-profile"
       style={{
-        background: `linear-gradient(180deg, ${theme.background}, #0a0a0a)`,
+        background: `linear-gradient(180deg, rgba(30, 30, 35, 0.98), #1a1a1f)`,
       }}
     >
+      {backgroundImage && (
+        <div 
+          className="profile-faction-bg"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        />
+      )}
       <div
         className="profile-banner"
         style={{
-          background: `linear-gradient(135deg, ${theme.primary}20, ${theme.accent}20, ${theme.background})`,
+          background: `linear-gradient(135deg, ${theme.primary}25, ${theme.accent}15, rgba(25, 25, 30, 0.95))`,
           borderBottom: `2px solid ${theme.primary}`,
         }}
       >
-        <div className="profile-avatar-large" style={{ borderColor: theme.primary, boxShadow: `0 0 30px ${theme.glow}60` }}>
-          <span className="avatar-emoji-large">{player.avatar}</span>
-        </div>
         <div className="profile-identity">
           <h1 className="profile-name" style={{ color: theme.primary }}>
             {player.name}
