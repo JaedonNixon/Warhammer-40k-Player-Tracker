@@ -100,6 +100,7 @@ export const players: Player[] = [
     totalDraws: 0,
     armies: [
       { name: "Space Wolves", gamesPlayed: 0, wins: 0, losses: 0, draws: 0, faction: "space-wolves" },
+      { name: "Emperor's Children", gamesPlayed: 0, wins: 0, losses: 0, draws: 0, faction: "emperors-children" },
     ],
     joinedDate: "2026-03-26",
   },

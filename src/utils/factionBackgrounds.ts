@@ -33,6 +33,7 @@ export const factionBackgrounds: Partial<Record<Faction, string>> = {
   "khorne-daemons": `${process.env.PUBLIC_URL}/images/factions/khorne-daemons-bg.webp`,
   "slaanesh": `${process.env.PUBLIC_URL}/images/factions/slaanesh-bg.jpg`,
   "slaanesh-daemons": `${process.env.PUBLIC_URL}/images/factions/slaanesh-bg.jpg`,
+  "emperors-children": `${process.env.PUBLIC_URL}/images/factions/emperors-children-bg.jpg`,
   "tzeentch": `${process.env.PUBLIC_URL}/images/factions/tzeentch-bg.jpg`,
   "tzeentch-daemons": `${process.env.PUBLIC_URL}/images/factions/tzeentch-bg.jpg`,
   // Xenos
@@ -84,6 +85,7 @@ const armyNameToFaction: Record<string, Faction> = {
   "Harlequins": "harlequins",
   "Ynnari": "ynnari",
   "Genestealer Cults": "genestealer-cults",
+  "Emperor's Children": "emperors-children",
 };
 
 // Get the faction background image URL from an army display name

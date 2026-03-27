@@ -7,6 +7,7 @@ import "../styles/Factions.css";
 
 const factionKeyMap: Record<string, Faction> = {
   Ultramarines: "ultramarines",
+  "Emperor's Children": "emperors-children",
 };
 
 const UnitDetailPage: React.FC = () => {

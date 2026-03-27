@@ -46,7 +46,13 @@ export function usePlayers() {
         ...(armyStats[a.name] || {}),
       }));
 
-      return { ...player, totalWins, totalLosses, totalDraws, armies: updatedArmies };
+      // Dynamically set theme to most-played army's faction
+      const mostPlayed = updatedArmies.length > 0
+        ? updatedArmies.reduce((best, a) => a.gamesPlayed > best.gamesPlayed ? a : best, updatedArmies[0])
+        : null;
+      const dynamicTheme = mostPlayed && mostPlayed.gamesPlayed > 0 ? mostPlayed.faction : player.theme;
+
+      return { ...player, totalWins, totalLosses, totalDraws, armies: updatedArmies, theme: dynamicTheme };
     });
   }, []);
 

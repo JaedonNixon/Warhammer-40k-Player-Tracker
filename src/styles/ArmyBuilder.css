@@ -11,14 +11,28 @@
   align-items: flex-start;
 }
 
-/* === LEFT PANEL — CATALOG === */
-.unit-catalog {
+/* === LEFT COLUMN === */
+.catalog-column {
   width: 420px;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === LEFT PANEL — CATALOG === */
+.unit-catalog {
   background: rgba(20, 20, 24, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   overflow: hidden;
+}
+
+.allied-catalog {
+  margin-top: 16px;
+}
+
+.allied-header {
+  background: rgba(0, 150, 255, 0.06);
 }
 
 .catalog-header {
@@ -36,6 +50,40 @@
   font-weight: 700;
   color: #ffd600;
   letter-spacing: 2px;
+}
+
+.catalog-faction-select {
+  font-family: "Cinzel", serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffd600;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 8px 32px 8px 12px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23ffd600' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5l6.5 6 6.5-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.catalog-faction-select:hover {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: #ffd600;
+}
+
+.catalog-faction-select:focus {
+  outline: none;
+  border-color: #ffd600;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
+}
+
+.catalog-faction-select option {
+  background: #1a1a1e;
+  color: #e0e0e0;
 }
 
 .catalog-count {
@@ -391,7 +439,7 @@
     flex-direction: column;
   }
 
-  .unit-catalog {
+  .catalog-column {
     width: 100%;
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { factionUnits, Unit, WeaponProfile } from "../data/units";
+import { factionUnits, alliedUnits, alliedFactionNames, Unit, WeaponProfile } from "../data/units";
 import "../styles/ArmyBuilder.css";
 
 interface ArmyEntry {
@@ -7,14 +7,19 @@ interface ArmyEntry {
   id: number;
 }
 
+const factionOptions = Object.keys(factionUnits);
+
 const ArmyBuilderPage: React.FC = () => {
-  const [selectedFaction] = useState("Ultramarines");
+  const [selectedFaction, setSelectedFaction] = useState("Ultramarines");
   const [army, setArmy] = useState<ArmyEntry[]>([]);
   const [expandedUnit, setExpandedUnit] = useState<string | null>(null);
+  const [expandedAllied, setExpandedAllied] = useState<string | null>(null);
   const [expandedArmy, setExpandedArmy] = useState<number | null>(null);
   const [nextId, setNextId] = useState(1);
 
   const availableUnits = factionUnits[selectedFaction] || [];
+  const availableAllied = alliedUnits[selectedFaction] || [];
+  const alliedLabel = alliedFactionNames[selectedFaction] || "Allied Units";
 
   const totalPoints = army.reduce((sum, entry) => {
     const pts = entry.unit.points[0];
@@ -108,10 +113,22 @@ const ArmyBuilderPage: React.FC = () => {
       </header>
 
       <div className="builder-layout">
-        {/* Left Panel — Unit Catalog */}
-        <div className="unit-catalog">
+        <div className="catalog-column">
+          {/* Left Panel — Unit Catalog */}
+          <div className="unit-catalog">
           <div className="catalog-header">
-            <h3 className="catalog-title">{selectedFaction}</h3>
+            <select
+              className="catalog-faction-select"
+              value={selectedFaction}
+              onChange={(e) => {
+                setSelectedFaction(e.target.value);
+                setExpandedUnit(null);
+              }}
+            >
+              {factionOptions.map((f) => (
+                <option key={f} value={f}>{f}</option>
+              ))}
+            </select>
             <span className="catalog-count">{availableUnits.length} units</span>
           </div>
           <div className="catalog-list">
@@ -145,6 +162,48 @@ const ArmyBuilderPage: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Allied Units Block */}
+        {availableAllied.length > 0 && (
+          <div className="unit-catalog allied-catalog">
+            <div className="catalog-header allied-header">
+              <h3 className="catalog-title">{alliedLabel}</h3>
+              <span className="catalog-count">{availableAllied.length} units</span>
+            </div>
+            <div className="catalog-list">
+              {availableAllied.map((unit) => (
+                <div key={unit.id} className="catalog-unit">
+                  <div className="catalog-unit-header">
+                    <div
+                      className="catalog-unit-clickable"
+                      onClick={() => setExpandedAllied(expandedAllied === unit.id ? null : unit.id)}
+                    >
+                      <div className="catalog-unit-info">
+                        <span className="catalog-unit-name">{unit.name}</span>
+                        <span className="catalog-unit-pts">{unit.points[0].cost} pts</span>
+                      </div>
+                      <div className="catalog-unit-keywords">
+                        {unit.keywords.filter(k => ["Infantry", "Battleline", "Vehicle", "Monster", "Walker"].includes(k)).map(k => (
+                          <span key={k} className="keyword-tag">{k}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <button className="quick-add-btn" onClick={() => addUnit(unit)} title="Add to army">+</button>
+                  </div>
+                  {expandedAllied === unit.id && (
+                    <div className="catalog-unit-detail">
+                      {renderUnitStats(unit)}
+                      <button className="add-unit-btn" onClick={() => addUnit(unit)}>
+                        + Add to Army
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         </div>
 
         {/* Right Panel — Your Army */}
