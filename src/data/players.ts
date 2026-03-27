@@ -116,4 +116,17 @@ export const players: Player[] = [
     ],
     joinedDate: "2026-03-26",
   },
+  {
+    id: "jeni-hnatiuk",
+    name: "Jeni Hnatiuk",
+    avatar: "🔔",
+    theme: "sisters-of-battle",
+    totalWins: 0,
+    totalLosses: 0,
+    totalDraws: 0,
+    armies: [
+      { name: "Adepta Sororitas", gamesPlayed: 0, wins: 0, losses: 0, draws: 0, faction: "sisters-of-battle" },
+    ],
+    joinedDate: "2026-03-27",
+  },
 ];
