@@ -376,13 +376,13 @@ const themes: Record<string, ThemeColors> = {
   },
   // Xenos
   "dark-eldar": {
-    primary: "#7b1fa2",
-    secondary: "#4a148c",
+    primary: "#ab47bc",
+    secondary: "#7b1fa2",
     accent: "#00e676",
-    background: "#0a050f",
-    cardBg: "#100a18",
+    background: "#120a1a",
+    cardBg: "#1a1025",
     text: "#f3e5f5",
-    border: "#7b1fa2",
+    border: "#ab47bc",
     glow: "#00e676",
   },
   "harlequins": {

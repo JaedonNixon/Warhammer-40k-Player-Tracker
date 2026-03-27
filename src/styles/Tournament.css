@@ -1,0 +1,300 @@
+/* === TOURNAMENT PAGE === */
+.tournament-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+}
+
+.tournament-status {
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+}
+
+.status-upcoming { color: #90caf9; }
+.status-in-progress { color: #ffd600; }
+.status-completed { color: #00e676; }
+
+/* === SECTION TITLES === */
+.section-title {
+  font-family: "Cinzel", serif;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #ffd600;
+  margin-bottom: 16px;
+}
+
+/* === STANDINGS TABLE === */
+.standings-section {
+  margin-bottom: 40px;
+}
+
+.standings-table {
+  background: rgba(20, 20, 24, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.standings-header {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px 40px 40px 50px 60px;
+  align-items: center;
+  padding: 10px 16px;
+  background: rgba(255, 215, 0, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #888;
+}
+
+.standings-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px 40px 40px 50px 60px;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.2s;
+}
+
+.standings-row:last-child {
+  border-bottom: none;
+}
+
+.standings-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.standings-row.first {
+  background: rgba(255, 215, 0, 0.04);
+}
+
+.col-rank {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  color: #888;
+  text-align: center;
+}
+
+.standings-row.first .col-rank {
+  color: #ffd600;
+}
+
+.col-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.standing-art {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.standing-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.standing-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.standing-army {
+  font-size: 0.65rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.col-record {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #ccc;
+}
+
+.col-record.wins { color: #00e676; }
+.col-record.losses { color: #ff5252; }
+.col-record.draws { color: #888; }
+
+.col-pts {
+  text-align: center;
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ffd600;
+}
+
+.col-diff {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.col-diff.positive { color: #00e676; }
+.col-diff.negative { color: #ff5252; }
+
+/* === ROUNDS === */
+.rounds-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.swiss-round {
+  background: rgba(20, 20, 24, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.round-label {
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #ffd600;
+  margin-bottom: 14px;
+}
+
+.round-pending {
+  color: #555;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.round-matches {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* === SWISS MATCH CARD === */
+.swiss-match {
+  display: flex;
+  align-items: center;
+  background: rgba(20, 20, 24, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.swiss-match:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.swiss-match.played {
+  border-color: rgba(0, 230, 118, 0.15);
+}
+
+.swiss-slot {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  min-width: 0;
+}
+
+.swiss-slot.winner {
+  background: rgba(0, 230, 118, 0.06);
+}
+
+.swiss-slot.winner .slot-name {
+  color: #00e676;
+}
+
+.swiss-slot.loser {
+  opacity: 0.5;
+}
+
+.slot-art {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.slot-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.slot-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slot-army {
+  font-size: 0.65rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slot-score {
+  margin-left: auto;
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffd600;
+  flex-shrink: 0;
+}
+
+.swiss-vs {
+  flex-shrink: 0;
+  width: 42px;
+  text-align: center;
+  font-family: "Cinzel", serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .standings-header,
+  .standings-row {
+    grid-template-columns: 30px 1fr 32px 32px 32px 40px 48px;
+    padding: 8px 10px;
+  }
+
+  .standing-art {
+    width: 28px;
+    height: 28px;
+  }
+
+  .slot-art {
+    width: 32px;
+    height: 32px;
+  }
+
+  .swiss-slot {
+    padding: 10px;
+    gap: 8px;
+  }
+}

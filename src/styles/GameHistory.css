@@ -361,3 +361,126 @@
     font-size: 0.65rem;
   }
 }
+
+/* === HISTORY TABS === */
+.history-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0;
+}
+
+.history-tab {
+  padding: 10px 24px;
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #888;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.history-tab:hover {
+  color: #ccc;
+}
+
+.history-tab.active {
+  color: #ffd600;
+  border-bottom-color: #ffd600;
+}
+
+/* === TOURNAMENTS TAB === */
+.tournaments-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tournament-selector {
+  display: flex;
+  justify-content: center;
+}
+
+.tournament-dropdown {
+  padding: 10px 20px;
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  background: rgba(20, 20, 24, 0.9);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 320px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23ffd600' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+.tournament-dropdown:focus {
+  outline: none;
+  border-color: #ffd600;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+}
+
+.tournament-dropdown option {
+  background: #1a1a1f;
+  color: #e0e0e0;
+}
+
+/* === TOURNAMENT DETAIL === */
+.tournament-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.tournament-detail-header {
+  text-align: center;
+}
+
+.tournament-detail-name {
+  font-family: "Cinzel", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffd600;
+  letter-spacing: 2px;
+}
+
+.tournament-detail-meta {
+  font-size: 0.8rem;
+  color: #888;
+  letter-spacing: 1px;
+  margin-top: 6px;
+}
+
+.subsection-title {
+  font-family: "Cinzel", serif;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #ffd600;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 600px) {
+  .history-tab {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+  }
+
+  .tournament-dropdown {
+    min-width: unset;
+    width: 100%;
+  }
+}

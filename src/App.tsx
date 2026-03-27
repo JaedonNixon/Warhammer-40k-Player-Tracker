@@ -6,6 +6,10 @@ import PlayersPage from "./pages/PlayersPage";
 import PlayerDetailPage from "./pages/PlayerDetailPage";
 import GameHistoryPage from "./pages/GameHistoryPage";
 import GameDetailPage from "./pages/GameDetailPage";
+import TournamentPage from "./pages/TournamentPage";
+import ArmyBuilderPage from "./pages/ArmyBuilderPage";
+import FactionsPage from "./pages/FactionsPage";
+import UnitDetailPage from "./pages/UnitDetailPage";
 import "./styles/App.css";
 
 const App: React.FC = () => {
@@ -20,6 +24,10 @@ const App: React.FC = () => {
           <Route path="/players/:id" element={<PlayerDetailPage />} />
           <Route path="/history" element={<GameHistoryPage />} />
           <Route path="/history/:id" element={<GameDetailPage />} />
+          <Route path="/tournament" element={<TournamentPage />} />
+          <Route path="/army-builder" element={<ArmyBuilderPage />} />
+          <Route path="/factions" element={<FactionsPage />} />
+          <Route path="/factions/:faction/:unitId" element={<UnitDetailPage />} />
         </Routes>
       </main>
       <footer className="app-footer">

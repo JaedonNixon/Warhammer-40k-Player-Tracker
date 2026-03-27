@@ -44,6 +44,27 @@ const Navbar: React.FC = () => {
           >
             <span className="nav-icon">📜</span> History
           </Link>
+          <Link
+            to="/tournament"
+            className={`nav-link ${isActive("/tournament") ? "active" : ""}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            <span className="nav-icon">🏆</span> Tournament
+          </Link>
+          <Link
+            to="/army-builder"
+            className={`nav-link ${isActive("/army-builder") ? "active" : ""}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            <span className="nav-icon">🛠️</span> Army Builder
+          </Link>
+          <Link
+            to="/factions"
+            className={`nav-link ${isActive("/factions") ? "active" : ""}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            <span className="nav-icon">⚔️</span> Factions
+          </Link>
         </div>
       </div>
     </nav>

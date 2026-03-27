@@ -1,0 +1,127 @@
+export interface SwissMatch {
+  id: number;
+  player1: string;
+  player1Army: string;
+  player2: string;
+  player2Army: string;
+  winner: string | null;   // null = not yet played
+  score1: number | null;
+  score2: number | null;
+}
+
+export interface SwissRound {
+  round: number;
+  matches: SwissMatch[];
+}
+
+export interface SwissStanding {
+  player: string;
+  army: string;
+  wins: number;
+  losses: number;
+  draws: number;
+  pointsFor: number;
+  pointsAgainst: number;
+}
+
+export interface Tournament {
+  id: string;
+  name: string;
+  date: string;
+  status: "upcoming" | "in-progress" | "completed";
+  totalRounds: number;
+  players: { name: string; army: string }[];
+  rounds: SwissRound[];
+}
+
+export const tournaments: Tournament[] = [
+  {
+    id: "tournament-1",
+    name: "Warhammer 40K Crusade I",
+    date: "2026-03-27",
+    status: "completed",
+    totalRounds: 3,
+    players: [
+      { name: "Linden Hnatiuk", army: "Adeptus Custodes" },
+      { name: "Aidan Mahoney", army: "Thousand Sons" },
+      { name: "Jordan Purcell", army: "Imperial Fists" },
+      { name: "Dylan Downs", army: "Orks" },
+      { name: "Anderson Cole", army: "Khorne Daemons" },
+      { name: "Jaedon Nixon", army: "Black Templars" },
+    ],
+    rounds: [
+      {
+        round: 1,
+        matches: [
+          { id: 1, player1: "Linden Hnatiuk", player1Army: "Adeptus Custodes", player2: "Jaedon Nixon", player2Army: "Black Templars", winner: "Linden Hnatiuk", score1: 82, score2: 65 },
+          { id: 2, player1: "Aidan Mahoney", player1Army: "Thousand Sons", player2: "Anderson Cole", player2Army: "Khorne Daemons", winner: "Aidan Mahoney", score1: 91, score2: 74 },
+          { id: 3, player1: "Jordan Purcell", player1Army: "Imperial Fists", player2: "Dylan Downs", player2Army: "Orks", winner: "Dylan Downs", score1: 68, score2: 77 },
+        ],
+      },
+      {
+        round: 2,
+        matches: [
+          { id: 4, player1: "Linden Hnatiuk", player1Army: "Adeptus Custodes", player2: "Aidan Mahoney", player2Army: "Thousand Sons", winner: "Aidan Mahoney", score1: 70, score2: 85 },
+          { id: 5, player1: "Dylan Downs", player1Army: "Orks", player2: "Jordan Purcell", player2Army: "Imperial Fists", winner: "Jordan Purcell", score1: 62, score2: 79 },
+          { id: 6, player1: "Jaedon Nixon", player1Army: "Black Templars", player2: "Anderson Cole", player2Army: "Khorne Daemons", winner: "Jaedon Nixon", score1: 88, score2: 71 },
+        ],
+      },
+      {
+        round: 3,
+        matches: [
+          { id: 7, player1: "Aidan Mahoney", player1Army: "Thousand Sons", player2: "Jordan Purcell", player2Army: "Imperial Fists", winner: "Aidan Mahoney", score1: 93, score2: 72 },
+          { id: 8, player1: "Linden Hnatiuk", player1Army: "Adeptus Custodes", player2: "Jaedon Nixon", player2Army: "Black Templars", winner: "Linden Hnatiuk", score1: 84, score2: 67 },
+          { id: 9, player1: "Dylan Downs", player1Army: "Orks", player2: "Anderson Cole", player2Army: "Khorne Daemons", winner: "Dylan Downs", score1: 80, score2: 58 },
+        ],
+      },
+    ],
+  },
+];
+
+export function getStandings(tournament: Tournament): SwissStanding[] {
+  const stats: Record<string, SwissStanding> = {};
+
+  tournament.players.forEach((p) => {
+    stats[p.name] = {
+      player: p.name,
+      army: p.army,
+      wins: 0,
+      losses: 0,
+      draws: 0,
+      pointsFor: 0,
+      pointsAgainst: 0,
+    };
+  });
+
+  tournament.rounds.forEach((round) => {
+    round.matches.forEach((match) => {
+      if (match.winner === null) return;
+      const s1 = stats[match.player1];
+      const s2 = stats[match.player2];
+      if (!s1 || !s2) return;
+
+      s1.pointsFor += match.score1 ?? 0;
+      s1.pointsAgainst += match.score2 ?? 0;
+      s2.pointsFor += match.score2 ?? 0;
+      s2.pointsAgainst += match.score1 ?? 0;
+
+      if (match.winner === "draw") {
+        s1.draws += 1;
+        s2.draws += 1;
+      } else if (match.winner === match.player1) {
+        s1.wins += 1;
+        s2.losses += 1;
+      } else {
+        s2.wins += 1;
+        s1.losses += 1;
+      }
+    });
+  });
+
+  return Object.values(stats).sort((a, b) => {
+    const aPts = a.wins * 3 + a.draws;
+    const bPts = b.wins * 3 + b.draws;
+    if (bPts !== aPts) return bPts - aPts;
+    return (b.pointsFor - b.pointsAgainst) - (a.pointsFor - a.pointsAgainst);
+  });
+}
