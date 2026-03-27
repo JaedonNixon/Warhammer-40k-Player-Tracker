@@ -1,0 +1,153 @@
+/* ===========================
+   LOGIN PAGE
+   =========================== */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 20px;
+}
+
+.login-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(80, 60, 20, 0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(50, 20, 20, 0.3) 0%, transparent 60%),
+    #12121a;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(25, 25, 35, 0.95);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  padding: 40px 32px;
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(255, 215, 0, 0.05);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-title {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffd600;
+  letter-spacing: 6px;
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  font-style: italic;
+  color: #888;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.form-heading {
+  font-family: "Cinzel", serif;
+  font-size: 1.1rem;
+  color: #ccc;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.login-error {
+  background: rgba(244, 67, 54, 0.15);
+  border: 1px solid rgba(244, 67, 54, 0.4);
+  color: #f44336;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.form-field {
+  margin-bottom: 18px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: #e8e8e8;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-field input:focus {
+  outline: none;
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.15);
+}
+
+.form-field input::placeholder {
+  color: #555;
+}
+
+.login-button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #b8860b, #ffd600);
+  color: #1a1a1f;
+  border: none;
+  border-radius: 6px;
+  font-family: "Cinzel", serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  margin-top: 8px;
+}
+
+.login-button:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.toggle-mode {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-top: 16px;
+  padding: 8px;
+  transition: color 0.2s;
+  font-family: inherit;
+}
+
+.toggle-mode:hover {
+  color: #ffd600;
+}

@@ -25,7 +25,7 @@ export const factionBackgrounds: Partial<Record<Faction, string>> = {
   // Chaos
   "death-guard": `${process.env.PUBLIC_URL}/images/factions/death-guard-bg.jpg`,
   "world-eaters": `${process.env.PUBLIC_URL}/images/factions/world-eaters-bg.jpg`,
-  "thousand-sons": `${process.env.PUBLIC_URL}/images/factions/thousand-sons-bg.jpg`,
+  "thousand-sons": `${process.env.PUBLIC_URL}/images/factions/thousand-sons-bg.png`,
   "chaos-knights": `${process.env.PUBLIC_URL}/images/factions/chaos-knights-bg.jpg`,
   "nurgle": `${process.env.PUBLIC_URL}/images/factions/nurgle-bg.jpg`,
   "nurgle-daemons": `${process.env.PUBLIC_URL}/images/factions/nurgle-bg.jpg`,

@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background-color: #1a1a1f;
   font-family: 'Barlow', 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

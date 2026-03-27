@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Player } from "../types";
 import { ThemeColors } from "../types";
-import { getAllGames, Game } from "../data/games";
+import { useGames } from "../hooks/useGames";
+import { Game } from "../data/games";
 
 interface PlayerGameHistoryProps {
   player: Player;
@@ -10,9 +11,10 @@ interface PlayerGameHistoryProps {
 }
 
 const PlayerGameHistory: React.FC<PlayerGameHistoryProps> = ({ player, theme }) => {
+  const { getAllGames } = useGames();
   const allGames = getAllGames();
   const playerGames = allGames.filter(
-    (g) => g.player1 === player.name || g.player2 === player.name
+    (g) => g.player1Id === player.id || g.player2Id === player.id
   ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const getFinalScores = (game: Game) => {
@@ -22,8 +24,8 @@ const PlayerGameHistory: React.FC<PlayerGameHistoryProps> = ({ player, theme }) 
 
   const getResult = (game: Game): "win" | "loss" | "draw" => {
     if (game.winner === "draw") return "draw";
-    if (game.player1 === player.name && game.winner === "player1") return "win";
-    if (game.player2 === player.name && game.winner === "player2") return "win";
+    if (game.player1Id === player.id && game.winner === "player1") return "win";
+    if (game.player2Id === player.id && game.winner === "player2") return "win";
     return "loss";
   };
 
@@ -50,7 +52,7 @@ const PlayerGameHistory: React.FC<PlayerGameHistoryProps> = ({ player, theme }) 
           {playerGames.map((game) => {
             const result = getResult(game);
             const scores = getFinalScores(game);
-            const isPlayer1 = game.player1 === player.name;
+            const isPlayer1 = game.player1Id === player.id;
             const opponent = isPlayer1 ? game.player2 : game.player1;
             const playerArmy = isPlayer1 ? game.player1Army : game.player2Army;
             const opponentArmy = isPlayer1 ? game.player2Army : game.player1Army;

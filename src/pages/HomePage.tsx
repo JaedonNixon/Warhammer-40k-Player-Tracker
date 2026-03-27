@@ -1,12 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { usePlayers } from "../hooks/usePlayers";
-import { getRecentGames } from "../data/games";
+import { useGames } from "../hooks/useGames";
 import { getArmyBackground } from "../utils/factionBackgrounds";
 import "../styles/HomePage.css";
 
 const HomePage: React.FC = () => {
-  const { getLeaderboard } = usePlayers();
+  const { getLeaderboard, loading: playersLoading } = usePlayers();
+  const { getRecentGames, loading: gamesLoading } = useGames();
+
+  if (playersLoading || gamesLoading) return <div className="home-page"><p style={{textAlign:'center',color:'#aaa',marginTop:'80px'}}>Loading...</p></div>;
+
   const leaderboard = getLeaderboard();
   const recentGames = getRecentGames(3);
 

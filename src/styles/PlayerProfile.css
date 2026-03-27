@@ -6,6 +6,27 @@
   position: relative;
 }
 
+.edit-player-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  padding: 8px 18px;
+  background: linear-gradient(135deg, #ffd600, #ffab00);
+  color: #1a1a1f;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.edit-player-btn:hover {
+  opacity: 0.85;
+}
+
 /* === PLAYER GAME HISTORY === */
 .player-game-history {
   display: flex;
@@ -208,7 +229,7 @@
 
 .profile-joined {
   color: #666;
-  margin-top: 8px;
+  margin-top: 4px;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;

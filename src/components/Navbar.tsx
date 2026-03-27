@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar: React.FC = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isAdmin } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleLogout = () => {
+    signOut(auth);
+  };
 
   return (
     <nav className="navbar">
@@ -65,6 +73,12 @@ const Navbar: React.FC = () => {
           >
             <span className="nav-icon">⚔️</span> Factions
           </Link>
+          <div className="nav-auth">
+            {isAdmin && <span className="admin-badge">ADMIN</span>}
+            <button className="logout-button" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </nav>

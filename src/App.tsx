@@ -1,6 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { useAuth } from "./hooks/useAuth";
 import Navbar from "./components/Navbar";
+import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import PlayersPage from "./pages/PlayersPage";
 import PlayerDetailPage from "./pages/PlayerDetailPage";
@@ -13,6 +15,21 @@ import UnitDetailPage from "./pages/UnitDetailPage";
 import "./styles/App.css";
 
 const App: React.FC = () => {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="app">
+        <div className="app-background" />
+        <div style={{ textAlign: "center", color: "#aaa", marginTop: "40vh" }}>Loading...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <LoginPage />;
+  }
+
   return (
     <div className="app">
       <div className="app-background" />

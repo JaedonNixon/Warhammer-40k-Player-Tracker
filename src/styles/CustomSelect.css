@@ -1,0 +1,80 @@
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-select-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 18px;
+  font-family: "Cinzel", serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #ffd600;
+  background-color: #1a1a1e;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 220px;
+  text-align: left;
+  transition: border-color 0.2s;
+}
+
+.custom-select-btn:hover {
+  border-color: #ffd600;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+}
+
+.custom-select-arrow {
+  font-size: 0.7rem;
+  color: #ffd600;
+}
+
+.custom-select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background-color: #1a1a1e !important;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 6px;
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+}
+
+.custom-select-option {
+  padding: 8px 12px;
+  color: #ccc !important;
+  background-color: #1a1a1e !important;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.custom-select-option:hover {
+  background-color: rgba(255, 215, 0, 0.12) !important;
+  color: #ffd600 !important;
+}
+
+.custom-select-option.active {
+  color: #ffd600 !important;
+  background-color: #1a1a1e !important;
+}
+
+.custom-select-dropdown::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-select-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-select-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.3);
+  border-radius: 3px;
+}

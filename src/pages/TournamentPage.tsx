@@ -1,9 +1,15 @@
 import React from "react";
-import { tournaments, getStandings, SwissMatch } from "../data/tournaments";
+import { getStandings, SwissMatch } from "../data/tournaments";
+import { useTournaments } from "../hooks/useTournaments";
 import { getArmyBackground } from "../utils/factionBackgrounds";
 import "../styles/Tournament.css";
 
 const TournamentPage: React.FC = () => {
+  const { tournaments, loading } = useTournaments();
+
+  if (loading) return <div className="tournament-page"><p style={{textAlign:'center',color:'#aaa',marginTop:'80px'}}>Loading...</p></div>;
+  if (tournaments.length === 0) return <div className="tournament-page"><p style={{textAlign:'center',color:'#aaa',marginTop:'80px'}}>No tournaments found.</p></div>;
+
   const tournament = tournaments[0];
   const standings = getStandings(tournament);
 

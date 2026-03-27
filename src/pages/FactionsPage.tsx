@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { factionUnits } from "../data/units";
+import CustomSelect from "../components/CustomSelect";
 import "../styles/Factions.css";
 
 const factions = Object.keys(factionUnits);
@@ -15,16 +16,15 @@ const FactionsPage: React.FC = () => {
       <h1 className="factions-title">Factions</h1>
 
       <div className="faction-selector">
-        <select
-          className="faction-dropdown"
+        <CustomSelect
           value={selectedFaction}
-          onChange={(e) => setSelectedFaction(e.target.value)}
-        >
-          <option value="">— Select a Faction —</option>
-          {factions.map((f) => (
-            <option key={f} value={f}>{f}</option>
-          ))}
-        </select>
+          onChange={setSelectedFaction}
+          placeholder="— Select a Faction —"
+          options={[
+            { label: "— Select a Faction —", value: "" },
+            ...factions.map((f) => ({ label: f, value: f }))
+          ]}
+        />
       </div>
 
       {selectedFaction && (

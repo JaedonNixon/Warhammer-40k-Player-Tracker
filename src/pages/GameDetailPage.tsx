@@ -1,12 +1,16 @@
 import React from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { games } from "../data/games";
+import { useParams, useNavigate } from "react-router-dom";
+import { useGames } from "../hooks/useGames";
 import { getArmyBackground } from "../utils/factionBackgrounds";
 import "../styles/GameDetail.css";
 
 const GameDetailPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { games, loading } = useGames();
+
+  if (loading) return <div className="game-detail-page"><p style={{textAlign:'center',color:'#aaa',marginTop:'80px'}}>Loading...</p></div>;
+
   const game = games.find((g) => g.id === Number(id));
 
   if (!game) {

@@ -59,6 +59,7 @@ export type Faction =
 
 export interface Player {
   id: string;
+  accountId: number;
   name: string;
   nickname?: string;
   avatar: string;

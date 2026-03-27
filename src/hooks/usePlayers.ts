@@ -1,12 +1,32 @@
-import { useMemo } from "react";
-import { players as playerData } from "../data/players";
-import { getAllGames } from "../data/games";
+import { useEffect, useMemo, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+import { Game } from "../data/games";
 import { Player } from "../types";
 
 export function usePlayers() {
-  const players = useMemo(() => {
-    const allGames = getAllGames();
+  const [playerData, setPlayerData] = useState<Player[]>([]);
+  const [allGames, setAllGames] = useState<Game[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    async function fetchData() {
+      const [playersSnap, gamesSnap] = await Promise.all([
+        getDocs(collection(db, "players")),
+        getDocs(collection(db, "games")),
+      ]);
+      setPlayerData(
+        playersSnap.docs
+          .map((doc) => doc.data() as Player & { deleted?: boolean })
+          .filter((p) => !p.deleted) as Player[]
+      );
+      setAllGames(gamesSnap.docs.map((doc) => doc.data() as Game));
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
+  const players = useMemo(() => {
     return playerData.map((player) => {
       // Compute per-army stats from games
       const armyStats: Record<string, { gamesPlayed: number; wins: number; losses: number; draws: number }> = {};
@@ -19,8 +39,8 @@ export function usePlayers() {
       let totalDraws = 0;
 
       allGames.forEach((game) => {
-        const isP1 = game.player1 === player.name;
-        const isP2 = game.player2 === player.name;
+        const isP1 = game.player1Id === player.id;
+        const isP2 = game.player2Id === player.id;
         if (!isP1 && !isP2) return;
 
         const armyName = isP1 ? game.player1Army : game.player2Army;
@@ -54,7 +74,7 @@ export function usePlayers() {
 
       return { ...player, totalWins, totalLosses, totalDraws, armies: updatedArmies, theme: dynamicTheme };
     });
-  }, []);
+  }, [playerData, allGames]);
 
   const getPlayer = (id: string): Player | undefined => {
     return players.find((p) => p.id === id);
@@ -84,5 +104,5 @@ export function usePlayers() {
     return [...player.armies].sort((a, b) => b.gamesPlayed - a.gamesPlayed);
   };
 
-  return { players, getPlayer, getLeaderboard, getTotalGames, getWinRate, getSortedArmies };
+  return { players, getPlayer, getLeaderboard, getTotalGames, getWinRate, getSortedArmies, loading };
 }

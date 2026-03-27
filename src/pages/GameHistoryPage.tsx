@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllGames, Game } from "../data/games";
-import { tournaments, getStandings, Tournament, SwissMatch } from "../data/tournaments";
+import { Game } from "../data/games";
+import { getStandings, Tournament, SwissMatch } from "../data/tournaments";
+import { useGames } from "../hooks/useGames";
+import { useTournaments } from "../hooks/useTournaments";
 import { getArmyBackground } from "../utils/factionBackgrounds";
+import CustomSelect from "../components/CustomSelect";
 import "../styles/GameHistory.css";
 import "../styles/Tournament.css";
 
 type Tab = "matches" | "tournaments";
 
 const GameHistoryPage: React.FC = () => {
+  const { getAllGames, loading: gamesLoading } = useGames();
+  const { tournaments, loading: tournamentsLoading } = useTournaments();
   const allGames = getAllGames();
   const [activeTab, setActiveTab] = useState<Tab>("matches");
-  const [selectedTournament, setSelectedTournament] = useState<string>(
-    tournaments.length > 0 ? tournaments[0].id : ""
-  );
+  const [selectedTournament, setSelectedTournament] = useState<string>("");
 
-  const currentTournament = tournaments.find((t) => t.id === selectedTournament) || null;
+  const resolvedSelected = selectedTournament || (tournaments.length > 0 ? tournaments[0].id : "");
+  const currentTournament = tournaments.find((t) => t.id === resolvedSelected) || null;
+
+  if (gamesLoading || tournamentsLoading) return <div className="game-history-page"><p style={{textAlign:'center',color:'#aaa',marginTop:'80px'}}>Loading...</p></div>;
 
   const getFinalScores = (game: Game) => {
     const lastTurn = game.turnScores[game.turnScores.length - 1];
@@ -226,17 +232,14 @@ const GameHistoryPage: React.FC = () => {
       {activeTab === "tournaments" && (
         <div className="tournaments-tab">
           <div className="tournament-selector">
-            <select
-              className="tournament-dropdown"
-              value={selectedTournament}
-              onChange={(e) => setSelectedTournament(e.target.value)}
-            >
-              {tournaments.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.name} — {t.date} ({t.status.replace("-", " ")})
-                </option>
-              ))}
-            </select>
+            <CustomSelect
+              value={resolvedSelected}
+              onChange={setSelectedTournament}
+              options={tournaments.map((t) => ({
+                label: `${t.name} — ${t.date} (${t.status.replace("-", " ")})`,
+                value: t.id
+              }))}
+            />
           </div>
 
           {currentTournament && renderTournamentDetail(currentTournament)}

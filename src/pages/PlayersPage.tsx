@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import { usePlayers } from "../hooks/usePlayers";
+import { useAuth } from "../hooks/useAuth";
 import PlayerCard from "../components/PlayerCard";
+import AddPlayerModal from "../components/AddPlayerModal";
+import CustomSelect from "../components/CustomSelect";
 
 const PlayersPage: React.FC = () => {
-  const { players } = usePlayers();
+  const { players, loading } = usePlayers();
+  const { isAdmin } = useAuth();
   const [sortBy, setSortBy] = useState<"winrate" | "wins" | "games" | "name">("winrate");
+  const [showAddModal, setShowAddModal] = useState(false);
+
+  if (loading) return <div style={{textAlign:'center',color:'#aaa',marginTop:'80px'}}>Loading...</div>;
 
   const getSortedPlayers = () => {
     let filtered = [...players];
@@ -47,17 +54,22 @@ const PlayersPage: React.FC = () => {
       <div className="filters-bar">
         <div className="filter-group">
           <label className="filter-label">Sort By:</label>
-          <select
-            className="filter-select"
+          <CustomSelect
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as "winrate" | "wins" | "games" | "name")}
-          >
-            <option value="winrate">Win Rate</option>
-            <option value="wins">Total Wins</option>
-            <option value="games">Games Played</option>
-            <option value="name">Name</option>
-          </select>
+            onChange={(v) => setSortBy(v as "winrate" | "wins" | "games" | "name")}
+            options={[
+              { label: "Win Rate", value: "winrate" },
+              { label: "Total Wins", value: "wins" },
+              { label: "Games Played", value: "games" },
+              { label: "Name", value: "name" },
+            ]}
+          />
         </div>
+        {isAdmin && (
+          <button className="add-player-btn" onClick={() => setShowAddModal(true)}>
+            + Add Player
+          </button>
+        )}
       </div>
 
       <div className="players-grid">
@@ -70,6 +82,13 @@ const PlayersPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {showAddModal && (
+        <AddPlayerModal
+          onClose={() => setShowAddModal(false)}
+          onAdded={() => window.location.reload()}
+        />
+      )}
     </div>
   );
 };

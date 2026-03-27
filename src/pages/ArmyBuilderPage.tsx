@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { factionUnits, alliedUnits, alliedFactionNames, Unit, WeaponProfile } from "../data/units";
+import CustomSelect from "../components/CustomSelect";
 import "../styles/ArmyBuilder.css";
 
 interface ArmyEntry {
   unit: Unit;
   id: number;
+  pointsIndex: number;
+  isAllied: boolean;
 }
 
 const factionOptions = Object.keys(factionUnits);
@@ -22,14 +25,27 @@ const ArmyBuilderPage: React.FC = () => {
   const alliedLabel = alliedFactionNames[selectedFaction] || "Allied Units";
 
   const totalPoints = army.reduce((sum, entry) => {
-    const pts = entry.unit.points[0];
+    const pts = entry.unit.points[entry.pointsIndex];
     return sum + (pts ? pts.cost : 0);
   }, 0);
 
-  const addUnit = (unit: Unit) => {
-    setArmy([...army, { unit, id: nextId }]);
+  const addUnit = (unit: Unit, pointsIndex: number = 0, isAllied: boolean = false) => {
+    setArmy([...army, { unit, id: nextId, pointsIndex, isAllied }]);
     setNextId(nextId + 1);
   };
+
+  const isUniqueInArmy = (unit: Unit) =>
+    unit.keywords.includes("Epic Hero") && army.some((e) => e.unit.id === unit.id);
+
+  const getUnitCategory = (unit: Unit): string => {
+    const kw = unit.keywords;
+    if (kw.includes("Character")) return "Characters";
+    if (kw.includes("Battleline")) return "Battleline";
+    if (kw.includes("Dedicated Transport")) return "Dedicated Transports";
+    return "Other Datasheets";
+  };
+
+  const categoryOrder = ["Characters", "Battleline", "Dedicated Transports", "Other Datasheets"];
 
   const removeUnit = (id: number) => {
     setArmy(army.filter((e) => e.id !== id));
@@ -93,11 +109,6 @@ const ArmyBuilderPage: React.FC = () => {
           </ul>
         </div>
       )}
-      <div className="points-info">
-        {unit.points.map((p) => (
-          <span key={p.models} className="points-tag">{p.models} models — {p.cost} pts</span>
-        ))}
-      </div>
     </div>
   );
 
@@ -117,50 +128,97 @@ const ArmyBuilderPage: React.FC = () => {
           {/* Left Panel — Unit Catalog */}
           <div className="unit-catalog">
           <div className="catalog-header">
-            <select
-              className="catalog-faction-select"
+            <CustomSelect
               value={selectedFaction}
-              onChange={(e) => {
-                setSelectedFaction(e.target.value);
+              onChange={(v) => {
+                if (army.length > 0) {
+                  if (!window.confirm("Switching factions will clear your army list. Continue?")) return;
+                  setArmy([]);
+                  setNextId(1);
+                }
+                setSelectedFaction(v);
                 setExpandedUnit(null);
               }}
-            >
-              {factionOptions.map((f) => (
-                <option key={f} value={f}>{f}</option>
-              ))}
-            </select>
+              options={factionOptions.map((f) => ({ label: f, value: f }))}
+            />
             <span className="catalog-count">{availableUnits.length} units</span>
           </div>
           <div className="catalog-list">
-            {availableUnits.map((unit) => (
-              <div key={unit.id} className="catalog-unit">
-                <div className="catalog-unit-header">
-                  <div
-                    className="catalog-unit-clickable"
-                    onClick={() => setExpandedUnit(expandedUnit === unit.id ? null : unit.id)}
-                  >
-                    <div className="catalog-unit-info">
-                      <span className="catalog-unit-name">{unit.name}</span>
-                      <span className="catalog-unit-pts">{unit.points[0].cost} pts</span>
+            {(() => {
+              const grouped: Record<string, Unit[]> = {};
+              availableUnits.forEach((unit) => {
+                const cat = getUnitCategory(unit);
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(unit);
+              });
+
+              return categoryOrder
+                .filter((cat) => grouped[cat] && grouped[cat].length > 0)
+                .map((cat) => (
+                  <div key={cat} className="catalog-category">
+                    <div className="catalog-category-header">
+                      <span className="catalog-category-name">{cat}</span>
+                      <span className="catalog-category-count">{grouped[cat].length}</span>
                     </div>
-                    <div className="catalog-unit-keywords">
-                      {unit.keywords.filter(k => ["Infantry", "Battleline", "Vehicle", "Monster"].includes(k)).map(k => (
-                        <span key={k} className="keyword-tag">{k}</span>
-                      ))}
-                    </div>
+                    {grouped[cat].map((unit) => {
+                      const locked = isUniqueInArmy(unit);
+                      const hasMultipleSizes = unit.points.length > 1;
+                      return (
+                      <div key={unit.id} className={`catalog-unit ${locked ? "unit-locked" : ""}`}>
+                        <div className="catalog-unit-header">
+                          <div
+                            className="catalog-unit-clickable"
+                            onClick={() => setExpandedUnit(expandedUnit === unit.id ? null : unit.id)}
+                          >
+                            <div className="catalog-unit-info">
+                              <span className="catalog-unit-name">{unit.name}</span>
+                              <span className="catalog-unit-pts">{unit.points[0].cost} pts</span>
+                            </div>
+                            <div className="catalog-unit-keywords">
+                              {unit.keywords.filter(k => ["Infantry", "Battleline", "Vehicle", "Monster"].includes(k)).map(k => (
+                                <span key={k} className="keyword-tag">{k}</span>
+                              ))}
+                            </div>
+                          </div>
+                          {!hasMultipleSizes ? (
+                            <button className="quick-add-btn" onClick={() => addUnit(unit, 0)} title={locked ? "Already in army (unique)" : "Add to army"} disabled={locked}>+</button>
+                          ) : (
+                            <div className="quick-size-btns">
+                              {unit.points.map((p, i) => (
+                                <button
+                                  key={i}
+                                  className="quick-add-btn quick-size-btn"
+                                  onClick={() => addUnit(unit, i)}
+                                  title={locked ? "Already in army (unique)" : `Add ${p.models} models`}
+                                  disabled={locked}
+                                >{p.models}</button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        {expandedUnit === unit.id && (
+                          <div className="catalog-unit-detail">
+                            {renderUnitStats(unit)}
+                            <div className="size-picker">
+                              {unit.points.map((p, i) => (
+                                <button
+                                  key={i}
+                                  className="size-picker-btn"
+                                  onClick={() => addUnit(unit, i)}
+                                  disabled={locked}
+                                >
+                                  + Add {p.models} {p.models === 1 ? "model" : "models"} — {p.cost} pts
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      );
+                    })}
                   </div>
-                  <button className="quick-add-btn" onClick={() => addUnit(unit)} title="Add to army">+</button>
-                </div>
-                {expandedUnit === unit.id && (
-                  <div className="catalog-unit-detail">
-                    {renderUnitStats(unit)}
-                    <button className="add-unit-btn" onClick={() => addUnit(unit)}>
-                      + Add to Army
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
+                ));
+            })()}
           </div>
         </div>
 
@@ -189,12 +247,12 @@ const ArmyBuilderPage: React.FC = () => {
                         ))}
                       </div>
                     </div>
-                    <button className="quick-add-btn" onClick={() => addUnit(unit)} title="Add to army">+</button>
+                    <button className="quick-add-btn" onClick={() => addUnit(unit, 0, true)} title="Add to army">+</button>
                   </div>
                   {expandedAllied === unit.id && (
                     <div className="catalog-unit-detail">
                       {renderUnitStats(unit)}
-                      <button className="add-unit-btn" onClick={() => addUnit(unit)}>
+                      <button className="add-unit-btn" onClick={() => addUnit(unit, 0, true)}>
                         + Add to Army
                       </button>
                     </div>
@@ -218,30 +276,57 @@ const ArmyBuilderPage: React.FC = () => {
             </div>
           ) : (
             <div className="army-entries">
-              {army.map((entry) => (
-                <div key={entry.id} className="army-entry">
-                  <div
-                    className="army-entry-header"
-                    onClick={() => setExpandedArmy(expandedArmy === entry.id ? null : entry.id)}
-                  >
-                    <span className="army-entry-name">{entry.unit.name}</span>
-                    <div className="army-entry-actions">
-                      <span className="army-entry-pts">{entry.unit.points[0].cost} pts</span>
-                      <button
-                        className="remove-unit-btn"
-                        onClick={(e) => { e.stopPropagation(); removeUnit(entry.id); }}
-                      >
-                        ✕
-                      </button>
+              {(() => {
+                const getCategory = (entry: ArmyEntry): string => {
+                  if (entry.isAllied) return "Allied Units";
+                  return getUnitCategory(entry.unit);
+                };
+
+                const armyCategoryOrder = [...categoryOrder, "Allied Units"];
+                const grouped: Record<string, ArmyEntry[]> = {};
+                army.forEach((entry) => {
+                  const cat = getCategory(entry);
+                  if (!grouped[cat]) grouped[cat] = [];
+                  grouped[cat].push(entry);
+                });
+
+                return armyCategoryOrder
+                  .filter((cat) => grouped[cat] && grouped[cat].length > 0)
+                  .map((cat) => (
+                    <div key={cat} className="army-category">
+                      <div className="army-category-header">
+                        <span className="army-category-name">{cat}</span>
+                        <span className="army-category-count">{grouped[cat].length}</span>
+                      </div>
+                      {grouped[cat].map((entry) => (
+                        <div key={entry.id} className="army-entry">
+                          <div
+                            className="army-entry-header"
+                            onClick={() => setExpandedArmy(expandedArmy === entry.id ? null : entry.id)}
+                          >
+                            <span className="army-entry-name">{entry.unit.name}</span>
+                            <div className="army-entry-actions">
+                              <span className="army-entry-pts">
+                                {entry.unit.points[entry.pointsIndex].models} models — {entry.unit.points[entry.pointsIndex].cost} pts
+                              </span>
+                              <button
+                                className="remove-unit-btn"
+                                onClick={(e) => { e.stopPropagation(); removeUnit(entry.id); }}
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          </div>
+                          {expandedArmy === entry.id && (
+                            <div className="army-entry-detail">
+                              {renderUnitStats(entry.unit)}
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
-                  </div>
-                  {expandedArmy === entry.id && (
-                    <div className="army-entry-detail">
-                      {renderUnitStats(entry.unit)}
-                    </div>
-                  )}
-                </div>
-              ))}
+                  ));
+              })()}
             </div>
           )}
         </div>

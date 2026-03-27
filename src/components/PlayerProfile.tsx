@@ -9,9 +9,11 @@ import "../styles/PlayerProfile.css";
 
 interface PlayerProfileProps {
   player: Player;
+  isAdmin?: boolean;
+  onEdit?: () => void;
 }
 
-const PlayerProfile: React.FC<PlayerProfileProps> = ({ player }) => {
+const PlayerProfile: React.FC<PlayerProfileProps> = ({ player, isAdmin, onEdit }) => {
   const { getWinRate, getTotalGames } = usePlayers();
   const theme = getThemeColors(player.theme);
   const winRate = getWinRate(player);
@@ -38,6 +40,9 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ player }) => {
           style={{ backgroundImage: `url(${backgroundImage})`, backgroundPosition }}
         />
       )}
+      {isAdmin && onEdit && (
+        <button className="edit-player-btn" onClick={onEdit}>✏️ Edit Player</button>
+      )}
       <div
         className="profile-banner"
         style={{
@@ -58,6 +63,7 @@ const PlayerProfile: React.FC<PlayerProfileProps> = ({ player }) => {
           <p className="profile-joined">
             Enlisted: {new Date(player.joinedDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
           </p>
+          <p className="profile-joined">Account ID #{player.accountId}</p>
         </div>
       </div>
 
