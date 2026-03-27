@@ -2,14 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { usePlayers } from "../hooks/usePlayers";
 import { useGames } from "../hooks/useGames";
+import { useTournaments } from "../hooks/useTournaments";
 import { getArmyBackground } from "../utils/factionBackgrounds";
 import "../styles/HomePage.css";
 
 const HomePage: React.FC = () => {
   const { getLeaderboard, loading: playersLoading } = usePlayers();
   const { getRecentGames, loading: gamesLoading } = useGames();
+  const { tournaments, loading: tournamentsLoading } = useTournaments();
 
-  if (playersLoading || gamesLoading) return <div className="home-page"><p style={{textAlign:'center',color:'#aaa',marginTop:'80px'}}>Loading...</p></div>;
+  if (playersLoading || gamesLoading || tournamentsLoading) return <div className="home-page"><p style={{textAlign:'center',color:'#aaa',marginTop:'80px'}}>Loading...</p></div>;
 
   const leaderboard = getLeaderboard();
   const recentGames = getRecentGames(3);
@@ -38,6 +40,12 @@ const HomePage: React.FC = () => {
               </span>
               <span className="hero-stat-label">Battles Fought</span>
             </div>
+            <div className="hero-stat">
+              <span className="hero-stat-value">{tournaments.length}</span>
+              <span className="hero-stat-label">Tournaments</span>
+            </div>
+          </div>
+          <div className="hero-stats">
             <div className="hero-stat">
               <span className="hero-stat-value">
                 {leaderboard.reduce((sum, p) => sum + p.armies.length, 0)}/30

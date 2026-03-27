@@ -19,8 +19,12 @@ const PlayersPage: React.FC = () => {
     switch (sortBy) {
       case "winrate":
         return filtered.sort((a, b) => {
-          const aRate = a.totalWins / (a.totalWins + a.totalLosses + a.totalDraws);
-          const bRate = b.totalWins / (b.totalWins + b.totalLosses + b.totalDraws);
+          const aTotal = a.totalWins + a.totalLosses + a.totalDraws;
+          const bTotal = b.totalWins + b.totalLosses + b.totalDraws;
+          if (aTotal === 0 && bTotal > 0) return 1;
+          if (bTotal === 0 && aTotal > 0) return -1;
+          const aRate = aTotal > 0 ? a.totalWins / aTotal : 0;
+          const bRate = bTotal > 0 ? b.totalWins / bTotal : 0;
           return bRate - aRate;
         });
       case "wins":

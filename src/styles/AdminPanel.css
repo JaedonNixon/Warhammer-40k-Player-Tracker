@@ -1,0 +1,238 @@
+.admin-panel-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.admin-section {
+  margin-bottom: 32px;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 12px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.admin-section-title {
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffd600;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+/* Stats Grid */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.admin-stat-card {
+  text-align: center;
+  padding: 20px 12px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.admin-stat-value {
+  display: block;
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffd600;
+  line-height: 1;
+}
+
+.admin-stat-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #888;
+  margin-top: 6px;
+}
+
+/* Quick Stats */
+.admin-quick-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.admin-quick-item {
+  flex: 1;
+  min-width: 180px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.quick-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.quick-value {
+  display: block;
+  font-family: "Cinzel", serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e0e0e0;
+}
+
+.quick-sub {
+  display: block;
+  font-size: 0.8rem;
+  color: #ffd600;
+  margin-top: 2px;
+}
+
+/* Table */
+.admin-table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.admin-table th {
+  font-family: "Cinzel", serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #ffd600;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.admin-table td {
+  padding: 10px 12px;
+  color: #ccc;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(255, 215, 0, 0.04);
+}
+
+.admin-table .stat-win { color: #4caf50; }
+.admin-table .stat-loss { color: #f44336; }
+.admin-table .stat-draw { color: #ff9800; }
+
+/* Admin List */
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.admin-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-email {
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.admin-you-badge {
+  font-family: "Cinzel", serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffd600;
+  background: rgba(255, 215, 0, 0.12);
+  padding: 3px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.admin-remove-btn {
+  font-family: "Cinzel", serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #f44336;
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.2s;
+}
+
+.admin-remove-btn:hover {
+  background: rgba(244, 67, 54, 0.2);
+}
+
+/* Add Admin Row */
+.admin-add-row {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-input {
+  flex: 1;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+}
+
+.admin-input:focus {
+  outline: none;
+  border-color: #ffd600;
+}
+
+.admin-add-btn {
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #1a1a1f;
+  background: linear-gradient(135deg, #ffd600, #ffab00);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+
+.admin-add-btn:hover {
+  opacity: 0.9;
+}
+
+.admin-error {
+  color: #f44336;
+  font-size: 0.8rem;
+  margin-top: 8px;
+}
+
+.admin-success {
+  color: #4caf50;
+  font-size: 0.8rem;
+  margin-top: 8px;
+}

@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
             <span className="nav-icon">⚔️</span> Factions
           </Link>
           <div className="nav-auth">
-            {isAdmin && <span className="admin-badge">ADMIN</span>}
+            {isAdmin && <Link to="/admin" className="admin-badge" onClick={() => setMenuOpen(false)}>ADMIN</Link>}
             <button className="logout-button" onClick={handleLogout}>
               Logout
             </button>

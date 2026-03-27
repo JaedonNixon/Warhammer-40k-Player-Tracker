@@ -84,6 +84,9 @@ export function usePlayers() {
     return [...players].sort((a, b) => {
       const aTotal = a.totalWins + a.totalLosses + a.totalDraws;
       const bTotal = b.totalWins + b.totalLosses + b.totalDraws;
+      // Players with 0 games go to the bottom
+      if (aTotal === 0 && bTotal > 0) return 1;
+      if (bTotal === 0 && aTotal > 0) return -1;
       const aWinRate = aTotal > 0 ? a.totalWins / aTotal : 0;
       const bWinRate = bTotal > 0 ? b.totalWins / bTotal : 0;
       return bWinRate - aWinRate;

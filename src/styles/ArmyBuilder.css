@@ -290,7 +290,7 @@
   min-height: 300px;
 }
 
-.army-header {
+.army-builder-page .army-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -299,7 +299,7 @@
   background: rgba(0, 230, 118, 0.04);
 }
 
-.army-title {
+.army-builder-page .army-title {
   font-family: "Cinzel", serif;
   font-size: 1rem;
   font-weight: 700;
