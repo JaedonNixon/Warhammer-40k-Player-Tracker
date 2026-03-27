@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Warhammer-40k-Player-Tracker/static/css/main.c2a7c77d.css",
+    "main.js": "/Warhammer-40k-Player-Tracker/static/js/main.08122db7.js",
+    "index.html": "/Warhammer-40k-Player-Tracker/index.html",
+    "main.c2a7c77d.css.map": "/Warhammer-40k-Player-Tracker/static/css/main.c2a7c77d.css.map",
+    "main.08122db7.js.map": "/Warhammer-40k-Player-Tracker/static/js/main.08122db7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c2a7c77d.css",
+    "static/js/main.08122db7.js"
+  ]
+}
