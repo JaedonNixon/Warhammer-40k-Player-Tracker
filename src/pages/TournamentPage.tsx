@@ -1,3 +1,19 @@
+/**
+ * TournamentPage.tsx — Dedicated tournament view (latest tournament)
+ *
+ * Route: /tournament
+ *
+ * Shows the FIRST tournament in the array (typically the most recent).
+ * Layout:
+ *   1. Header — tournament name, format (Swiss), round count, status badge
+ *   2. Standings table — rank, player/army, W/L/D, points (3×W + 1×D), score diff
+ *   3. Round results — each round's match cards with faction art
+ *
+ * Note: For viewing all tournaments, use GameHistoryPage's "Tournaments" tab.
+ *
+ * Data source: useTournaments (first tournament)
+ * Styled by: styles/Tournament.css
+ */
 import React from "react";
 import { getStandings, SwissMatch } from "../data/tournaments";
 import { useTournaments } from "../hooks/useTournaments";

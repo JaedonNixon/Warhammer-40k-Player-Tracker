@@ -1,3 +1,19 @@
+/**
+ * LoginPage.tsx — Authentication gate
+ *
+ * Shown when the user is NOT logged in (controlled by App.tsx).
+ * Supports both sign-in and sign-up modes (toggled by button).
+ *
+ * Uses Firebase Auth email/password flow:
+ *   - signInWithEmailAndPassword for returning users
+ *   - createUserWithEmailAndPassword for new accounts
+ *
+ * Error codes from Firebase are mapped to user-friendly messages.
+ * On successful auth, App.tsx detects the auth state change and renders
+ * the main app with Navbar + routes.
+ *
+ * Styled by: styles/Login.css
+ */
 import React, { useState } from "react";
 import {
   signInWithEmailAndPassword,

@@ -1,3 +1,11 @@
+/*
+ * GameHistory.css — Battle Archives page (match list tab)
+ *
+ * Covers: page layout, stats bar, tabs, game cards with faction art,
+ * matchup layout, date/turn info, winner badge, player game history
+ * cards (used in PlayerProfile too).
+ * Imported by: pages/GameHistoryPage.tsx
+ */
 /* === GAME HISTORY PAGE === */
 .game-history-page {
   max-width: 1200px;

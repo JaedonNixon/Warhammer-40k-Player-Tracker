@@ -1,3 +1,10 @@
+/*
+ * Login.css — Authentication gate page
+ *
+ * Covers: full-viewport centering, background overlay, login card,
+ * form fields, submit button, sign-up/sign-in toggle.
+ * Imported by: pages/LoginPage.tsx
+ */
 /* ===========================
    LOGIN PAGE
    =========================== */

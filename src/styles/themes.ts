@@ -1,3 +1,18 @@
+/**
+ * themes.ts — Faction color palette registry
+ *
+ * Maps every Faction slug (from types/index.ts) to a ThemeColors object
+ * containing 8 color values: primary, secondary, accent, background,
+ * cardBg, text, border, glow.
+ *
+ * Used by: PlayerCard, PlayerProfile, ArmyList, WinLossChart, and any
+ * component that calls getThemeColors(player.theme) for dynamic styling.
+ *
+ * Falls back to "generic" (neutral grey) if a faction has no entry.
+ *
+ * ~35+ faction palettes defined, organized by allegiance:
+ *   Space Marines → Imperium → Chaos → Xenos → Generic
+ */
 import { Faction, ThemeColors } from "../types";
 
 const themes: Record<string, ThemeColors> = {
@@ -437,6 +452,10 @@ const themes: Record<string, ThemeColors> = {
   },
 };
 
+/**
+ * Look up the ThemeColors for a given faction slug.
+ * Returns the "generic" grey palette if no specific theme is defined.
+ */
 export function getThemeColors(faction: Faction): ThemeColors {
   return themes[faction] || themes.generic;
 }

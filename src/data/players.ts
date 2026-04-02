@@ -1,8 +1,22 @@
+/**
+ * data/players.ts — Seed/reference data for initial player roster.
+ *
+ * This file contains the original player data used to seed Firestore.
+ * The live app reads players from Firestore (collection: "players") via
+ * the usePlayers hook — this file is kept as a reference and for use
+ * by the seed scripts (scripts/seedFirestore.mjs).
+ *
+ * Each player object matches the Player interface from types/index.ts.
+ * New players are added via the AddPlayerModal component (admin only),
+ * which writes directly to Firestore.
+ */
 import { Player } from "../types";
 
+/** Seed data — original player roster used for initial Firestore upload. */
 export const players: Player[] = [
   {
     id: "jaedon-nixon",
+    accountId: 1,
     name: "Jaedon Nixon",
     avatar: "⚔️",
     theme: "black-templars",
@@ -16,6 +30,7 @@ export const players: Player[] = [
   },
   {
     id: "linden-hnatiuk",
+    accountId: 2,
     name: "Linden Hnatiuk",
     avatar: "🛡️",
     theme: "ultramarines",
@@ -33,6 +48,7 @@ export const players: Player[] = [
   },
   {
     id: "aidan-mahoney",
+    accountId: 3,
     name: "Aidan Mahoney",
     avatar: "🗡️",
     theme: "thousand-sons",
@@ -50,6 +66,7 @@ export const players: Player[] = [
   },
   {
     id: "jordan-purcell",
+    accountId: 4,
     name: "Jordan Purcell",
     avatar: "🏰",
     theme: "imperial-fists",
@@ -64,6 +81,7 @@ export const players: Player[] = [
   },
   {
     id: "dylan-downs",
+    accountId: 5,
     name: "Dylan Downs",
     avatar: "🪓",
     theme: "orks",
@@ -78,6 +96,7 @@ export const players: Player[] = [
   },
   {
     id: "anderson-cole",
+    accountId: 6,
     name: "Anderson Cole",
     avatar: "🔥",
     theme: "khorne-daemons",
@@ -92,6 +111,7 @@ export const players: Player[] = [
   },
   {
     id: "aaron-dewapenaere",
+    accountId: 7,
     name: "Aaron Dewapenaere",
     avatar: "🐺",
     theme: "space-wolves",
@@ -106,6 +126,7 @@ export const players: Player[] = [
   },
   {
     id: "justin-paul",
+    accountId: 8,
     name: "Justin Paul",
     avatar: "🎯",
     theme: "tau",
@@ -119,6 +140,7 @@ export const players: Player[] = [
   },
   {
     id: "jeni-hnatiuk",
+    accountId: 9,
     name: "Jeni Hnatiuk",
     avatar: "🔔",
     theme: "sisters-of-battle",
@@ -132,6 +154,7 @@ export const players: Player[] = [
   },
   {
     id: "ethan-pelley",
+    accountId: 10,
     name: "Ethan Pelley",
     avatar: "🗡️",
     theme: "dark-eldar",

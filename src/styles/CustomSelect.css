@@ -1,3 +1,9 @@
+/*
+ * CustomSelect.css — Styled dropdown select replacement
+ *
+ * Covers: wrapper, trigger button, dropdown list, option hover/active.
+ * Imported by: components/CustomSelect.tsx
+ */
 .custom-select-wrapper {
   position: relative;
   display: inline-block;

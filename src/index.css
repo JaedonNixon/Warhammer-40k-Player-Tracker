@@ -1,3 +1,9 @@
+/*
+ * index.css — Base typography and body styles
+ *
+ * Sets the dark background, body font (Barlow), heading font (Cinzel),
+ * and font smoothing. Imported by index.tsx.
+ */
 body {
   margin: 0;
   background-color: #1a1a1f;

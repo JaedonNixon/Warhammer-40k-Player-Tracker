@@ -1,3 +1,18 @@
+/**
+ * seedFirestore.mjs — Standalone Firestore seeding script
+ *
+ * Uploads hardcoded player, game, and tournament data directly
+ * to the live Firestore database. This is the Node.js ESM version
+ * (runs outside the React app, no TypeScript needed).
+ *
+ * Run with: node scripts/seedFirestore.mjs
+ *
+ * WARNING: Overwrites existing documents by ID. Use for initial setup
+ * or to restore data to a known seed state.
+ *
+ * Data includes: players (with armies), games (with turn scores),
+ * and tournaments (Swiss format with rounds/matches).
+ */
 // Standalone seed script - run with: node scripts/seedFirestore.mjs
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, setDoc } from "firebase/firestore";

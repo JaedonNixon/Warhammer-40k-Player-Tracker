@@ -1,3 +1,18 @@
+/**
+ * GameDetailPage.tsx — Detailed view of a single game
+ *
+ * Route: /history/:id
+ *
+ * Layout:
+ *   1. Faction background art (left + right split for each player's army)
+ *   2. Header — date, "Battle Report" title, final turn + surrender info
+ *   3. Matchup — side-by-side player names, armies, final scores, VICTORY banner
+ *   4. Turn-by-Turn Scoring table — cumulative points per turn with diff column
+ *   5. Battle Notes placeholder (future expansion)
+ *
+ * Data source: useGames (finds game by numeric ID from URL param)
+ * Styled by: styles/GameDetail.css
+ */
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGames } from "../hooks/useGames";

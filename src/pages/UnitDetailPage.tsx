@@ -1,3 +1,20 @@
+/**
+ * UnitDetailPage.tsx — Full datasheet view for a single unit
+ *
+ * Route: /factions/:faction/:unitId
+ *
+ * Displays the complete unit datasheet:
+ *   - Faction background image (behind the card)
+ *   - Name + faction label
+ *   - Stat line: M, T, SV, W, LD, OC
+ *   - Ranged and melee weapon tables (name, range, A, BS/WS, S, AP, D, keywords)
+ *   - Abilities list
+ *   - Keywords tags
+ *   - Points options (different model counts)
+ *
+ * Data source: data/units.ts (factionUnits map, looked up by URL params)
+ * Styled by: styles/Factions.css
+ */
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { factionUnits, WeaponProfile } from "../data/units";
@@ -5,6 +22,7 @@ import { factionBackgrounds } from "../utils/factionBackgrounds";
 import { Faction } from "../types";
 import "../styles/Factions.css";
 
+/** Maps faction display names to Faction slug IDs for background image lookup */
 const factionKeyMap: Record<string, Faction> = {
   Ultramarines: "ultramarines",
   "Emperor's Children": "emperors-children",

@@ -1,3 +1,11 @@
+/*
+ * PlayerProfile.css — Full player detail view
+ *
+ * Covers: profile container, faction background overlay, edit button,
+ * banner (name/bio/join date), stats overview, content grid
+ * (battle history + army roster), army items + bars.
+ * Imported by: components/PlayerProfile.tsx
+ */
 .player-profile {
   border-radius: 16px;
   overflow: hidden;

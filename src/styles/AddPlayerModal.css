@@ -1,3 +1,11 @@
+/*
+ * AddPlayerModal.css — Modal styles for Add/Edit player dialogs
+ *
+ * Shared by: components/AddPlayerModal.tsx, components/EditPlayerModal.tsx
+ * Covers: overlay, modal card, form fields, avatar grid, faction toggle
+ * list, locked faction indicator, danger actions (delete/change ID),
+ * delete confirmation, change-ID confirmation.
+ */
 .modal-overlay {
   position: fixed;
   top: 0;

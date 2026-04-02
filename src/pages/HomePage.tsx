@@ -1,3 +1,17 @@
+/**
+ * HomePage.tsx — Landing page / dashboard
+ *
+ * Route: / (root)
+ *
+ * Layout:
+ *   1. Hero section — title, lore quote, aggregate stats
+ *      (Members, Battles Fought, Tournaments, Armies Fielded)
+ *   2. Recent Battles — the 3 most recent games as clickable cards
+ *      with faction background art on left/right sides
+ *
+ * Data sources: usePlayers (leaderboard), useGames (recent 3), useTournaments (count)
+ * Styled by: styles/HomePage.css
+ */
 import React from "react";
 import { Link } from "react-router-dom";
 import { usePlayers } from "../hooks/usePlayers";

@@ -1,3 +1,25 @@
+/**
+ * ArmyBuilderPage.tsx — Interactive army list builder
+ *
+ * Route: /army-builder
+ *
+ * Two-panel layout:
+ *   LEFT — Unit Catalog:
+ *     - Faction selector dropdown (switching factions clears army with confirmation)
+ *     - Units grouped by category (Characters, Battleline, Transports, Other)
+ *     - Click unit name to expand and see full datasheet (stats, weapons, abilities)
+ *     - Quick-add button (+) for single-size units, model count buttons for multi-size
+ *     - Epic Hero keyword enforces uniqueness (can't add twice)
+ *     - Allied units section shows cross-faction units (e.g. Imperial Agents for Marines)
+ *
+ *   RIGHT — Your Army:
+ *     - Running points total
+ *     - Added units grouped by category with cost display
+ *     - Click to expand datasheet, ✕ to remove
+ *
+ * Data source: data/units.ts (factionUnits, alliedUnits maps)
+ * Styled by: styles/ArmyBuilder.css
+ */
 import React, { useState } from "react";
 import { factionUnits, alliedUnits, alliedFactionNames, Unit, WeaponProfile } from "../data/units";
 import CustomSelect from "../components/CustomSelect";
@@ -34,9 +56,11 @@ const ArmyBuilderPage: React.FC = () => {
     setNextId(nextId + 1);
   };
 
+/** Check if a unit with the "Epic Hero" keyword is already in the army (unique constraint) */
   const isUniqueInArmy = (unit: Unit) =>
     unit.keywords.includes("Epic Hero") && army.some((e) => e.unit.id === unit.id);
 
+  /** Categorize a unit by its keywords for grouped display */
   const getUnitCategory = (unit: Unit): string => {
     const kw = unit.keywords;
     if (kw.includes("Character")) return "Characters";

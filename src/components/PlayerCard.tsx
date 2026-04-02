@@ -1,3 +1,20 @@
+/**
+ * PlayerCard.tsx — Compact player summary card
+ *
+ * Used in: PlayersPage (roster grid), HomePage (leaderboard)
+ *
+ * Each card displays:
+ *   - Faction background image (from the player's most-played army)
+ *   - Rank badge (optional, passed via prop)
+ *   - Name + nickname
+ *   - W/L/D counters and win-rate progress bar
+ *   - Total games and army count
+ *
+ * The entire card is a Link to /players/:id (PlayerDetailPage).
+ * Theme colors are derived from the player's .theme field (their primary faction).
+ *
+ * Styled by: styles/PlayerCard.css
+ */
 import React from "react";
 import { Link } from "react-router-dom";
 import { Player } from "../types";

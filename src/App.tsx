@@ -1,3 +1,18 @@
+/**
+ * App.tsx — Root application component
+ *
+ * Controls the top-level routing and auth gating:
+ *   - While auth is loading: shows a centered loading spinner
+ *   - Not logged in: renders LoginPage (full screen, no navbar)
+ *   - Logged in: renders Navbar + Routes + Footer
+ *
+ * All routes are defined here. Route guards for admin-only pages
+ * are handled within the individual page components (e.g. AdminPanelPage
+ * redirects non-admins).
+ *
+ * Uses react-router-dom v7 <Routes>/<Route>. The HashRouter wrapper
+ * is in index.tsx (required for GitHub Pages compatibility).
+ */
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";

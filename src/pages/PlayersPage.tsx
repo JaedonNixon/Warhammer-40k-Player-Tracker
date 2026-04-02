@@ -1,3 +1,16 @@
+/**
+ * PlayersPage.tsx — Player roster grid with sorting
+ *
+ * Route: /players
+ *
+ * Displays all non-deleted players as PlayerCard components in a grid.
+ * Sorting options: Win Rate (default), Total Wins, Games Played, Name.
+ * Win-rate sort pushes 0-game players to the bottom.
+ *
+ * Admin-only feature: "+ Add Player" button opens AddPlayerModal.
+ *
+ * Data source: usePlayers (players array)
+ */
 import React, { useState } from "react";
 import { usePlayers } from "../hooks/usePlayers";
 import { useAuth } from "../hooks/useAuth";
@@ -7,12 +20,16 @@ import CustomSelect from "../components/CustomSelect";
 
 const PlayersPage: React.FC = () => {
   const { players, loading } = usePlayers();
-  const { isAdmin } = useAuth();
+  const { isMod } = useAuth();
   const [sortBy, setSortBy] = useState<"winrate" | "wins" | "games" | "name">("winrate");
   const [showAddModal, setShowAddModal] = useState(false);
 
   if (loading) return <div style={{textAlign:'center',color:'#aaa',marginTop:'80px'}}>Loading...</div>;
 
+  /**
+   * Sort players according to the current sortBy state.
+   * "winrate" mode pushes 0-game players to the bottom (same as getLeaderboard).
+   */
   const getSortedPlayers = () => {
     let filtered = [...players];
 
@@ -69,7 +86,7 @@ const PlayersPage: React.FC = () => {
             ]}
           />
         </div>
-        {isAdmin && (
+        {isMod && (
           <button className="add-player-btn" onClick={() => setShowAddModal(true)}>
             + Add Player
           </button>

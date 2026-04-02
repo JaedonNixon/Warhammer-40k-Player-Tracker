@@ -1,3 +1,16 @@
+/**
+ * index.tsx — Application entry point
+ *
+ * Renders the React app into the DOM. Wrapping hierarchy:
+ *   React.StrictMode → HashRouter → AuthProvider → App
+ *
+ * HashRouter is used instead of BrowserRouter because the app is
+ * deployed on GitHub Pages, which doesn't support client-side routing
+ * with proper server configuration.
+ *
+ * Also includes a MutationObserver that suppresses harmless
+ * ResizeObserver errors from the CRA dev overlay.
+ */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter } from "react-router-dom";

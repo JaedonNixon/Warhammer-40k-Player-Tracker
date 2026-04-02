@@ -1,3 +1,10 @@
+/*
+ * GameDetail.css — Single game battle report
+ *
+ * Covers: full-page faction background panels, header, matchup section,
+ * victory banner, turn-by-turn scoring table, battle notes placeholder.
+ * Imported by: pages/GameDetailPage.tsx
+ */
 /* === GAME DETAIL PAGE === */
 .game-detail-page {
   max-width: 900px;

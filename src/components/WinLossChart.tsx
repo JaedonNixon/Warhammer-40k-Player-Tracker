@@ -1,9 +1,21 @@
+/**
+ * WinLossChart.tsx — Doughnut chart showing W/L/D breakdown
+ *
+ * Uses Chart.js (via react-chartjs-2) to render a doughnut chart.
+ * Colors: green (wins), red (losses), orange (draws).
+ * Border and tooltip colors match the player's faction theme.
+ *
+ * NOTE: This component is defined but currently NOT rendered in the app.
+ * The PlayerProfile uses PlayerGameHistory + ArmyList instead.
+ * It could be re-added to the profile layout in the future.
+ */
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Player } from "../types";
 import { getThemeColors } from "../styles/themes";
 
+// Register required Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface WinLossChartProps {

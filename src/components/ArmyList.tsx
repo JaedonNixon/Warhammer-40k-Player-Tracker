@@ -1,3 +1,17 @@
+/**
+ * ArmyList.tsx — Ranked list of a player's armies with per-army stats
+ *
+ * Used in: PlayerProfile (right column, "Army Roster" section)
+ *
+ * Displays each army sorted by games played (descending), showing:
+ *   - Rank number (#1, #2, ...)
+ *   - Army name with faction-themed colors
+ *   - Per-army W/L/D stats and win rate percentage
+ *   - Proportional bar (width relative to the most-played army)
+ *
+ * Each army's theme is independently resolved via getThemeColors(army.faction),
+ * so armies from different factions show different accent colors.
+ */
 import React from "react";
 import { Army } from "../types";
 import { ThemeColors } from "../types";
@@ -9,7 +23,9 @@ interface ArmyListProps {
 }
 
 const ArmyList: React.FC<ArmyListProps> = ({ armies, theme }) => {
+  // Sort armies by most games played (top army first)
   const sorted = [...armies].sort((a, b) => b.gamesPlayed - a.gamesPlayed);
+  // Used to calculate proportional bar widths (top army = 100%)
   const maxGames = sorted.length > 0 ? sorted[0].gamesPlayed : 1;
 
   return (

@@ -1,3 +1,24 @@
+/**
+ * EditPlayerModal.tsx — Modal dialog for editing an existing player
+ *
+ * Used in: PlayerDetailPage (admin clicks "Edit Player" on PlayerProfile)
+ *
+ * Three views in one modal (toggled by state flags):
+ *   1. **Edit form** (default) — Change name, add/remove factions
+ *      - Factions with game history are "locked" (🔒) and cannot be removed
+ *      - Player's theme auto-sets to their first selected faction
+ *   2. **Change Account ID** — Reassign the player's numeric ID
+ *      - Checks for uniqueness across all players (including deleted)
+ *      - Requires admin re-authentication for confirmation
+ *   3. **Delete Player** — Soft-delete (sets `deleted: true` in Firestore)
+ *      - Requires admin re-authentication
+ *      - Preserves game history; player just disappears from rosters
+ *
+ * All destructive actions require the admin to re-enter their Firebase
+ * email/password as a safety confirmation step.
+ *
+ * Styled by: styles/AddPlayerModal.css (shared with AddPlayerModal)
+ */
 import React, { useState } from "react";
 import { doc, updateDoc, collection, getDocs } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -7,6 +28,7 @@ import "../styles/AddPlayerModal.css";
 
 interface EditPlayerModalProps {
   player: Player;
+  canDelete?: boolean;   // Only true for the permanent admin — mods cannot delete
   onClose: () => void;
   onSaved: () => void;
   onDeleted?: () => void;
@@ -49,7 +71,7 @@ const FACTION_OPTIONS: { label: string; value: Faction }[] = [
   { label: "Ynnari", value: "ynnari" },
 ];
 
-const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClose, onSaved, onDeleted }) => {
+const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, canDelete = false, onClose, onSaved, onDeleted }) => {
   const [name, setName] = useState(player.name);
   const [selectedFactions, setSelectedFactions] = useState<{ label: string; value: Faction }[]>(
     player.armies.map((a) => {
@@ -75,7 +97,8 @@ const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClose, onSa
   const [changingId, setChangingId] = useState(false);
   const [changeIdError, setChangeIdError] = useState("");
 
-  // Factions that have games played — these cannot be removed
+  // Factions with existing game history are "locked" — removing them would
+  // orphan the per-army W/L/D stats, so they're protected from deselection
   const lockedFactions = new Set(
     player.armies.filter((a) => a.gamesPlayed > 0).map((a) => a.faction)
   );
@@ -104,8 +127,8 @@ const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClose, onSa
 
     setSaving(true);
     try {
-      // Build updated armies: keep existing army stats for factions that already exist,
-      // add new armies with zeroed stats for newly selected factions
+      // Merge strategy: preserve existing army stats for factions that already exist,
+      // create fresh zeroed entries for newly selected factions only
       const existingByFaction = new Map(player.armies.map((a) => [a.faction, a]));
       const armies = selectedFactions.map((f) => {
         const existing = existingByFaction.get(f.value);
@@ -149,7 +172,8 @@ const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClose, onSa
       // Re-authenticate with provided credentials to confirm identity
       await signInWithEmailAndPassword(auth, deleteEmail.trim(), deletePassword);
 
-      // Soft-delete: mark as deleted, preserve data under accountId
+      // Soft-delete: set deleted flag + timestamp. The usePlayers hook
+      // filters out players where deleted === true from all queries.
       await updateDoc(doc(db, "players", player.id), {
         deleted: true,
         deletedAt: new Date().toISOString(),
@@ -370,20 +394,24 @@ const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClose, onSa
               </button>
 
               <div className="modal-danger-actions">
-                <button
-                  type="button"
-                  className="modal-change-id-btn"
-                  onClick={() => setShowChangeId(true)}
-                >
-                  🔁 Change Account ID
-                </button>
-                <button
-                  type="button"
-                  className="modal-delete-btn"
-                  onClick={() => setShowDeleteConfirm(true)}
-                >
-                  🗑️ Delete Player
-                </button>
+                {canDelete && (
+                  <button
+                    type="button"
+                    className="modal-change-id-btn"
+                    onClick={() => setShowChangeId(true)}
+                  >
+                    🔁 Change Account ID
+                  </button>
+                )}
+                {canDelete && (
+                  <button
+                    type="button"
+                    className="modal-delete-btn"
+                    onClick={() => setShowDeleteConfirm(true)}
+                  >
+                    🗑️ Delete Player
+                  </button>
+                )}
               </div>
             </form>
           </>

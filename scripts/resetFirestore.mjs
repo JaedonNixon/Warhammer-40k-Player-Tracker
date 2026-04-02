@@ -1,3 +1,15 @@
+/**
+ * resetFirestore.mjs — Firestore data reset script
+ *
+ * Wipes all game and tournament data from Firestore and resets
+ * every player's stats (W/L/D) and per-army stats back to zero.
+ * Players themselves are NOT deleted — only their stats are zeroed.
+ *
+ * Run with: node scripts/resetFirestore.mjs
+ *
+ * WARNING: This is destructive and irreversible. All game history
+ * and tournament data will be permanently deleted.
+ */
 // One-time script to wipe games, reset player stats, and remove tournaments.
 // Run with: node scripts/resetFirestore.mjs
 import { initializeApp } from "firebase/app";

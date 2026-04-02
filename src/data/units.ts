@@ -1,36 +1,70 @@
+/**
+ * data/units.ts — Unit datasheet definitions for the Army Builder and Factions pages.
+ *
+ * Contains all unit profiles, weapons, abilities, and point costs used by:
+ * - ArmyBuilderPage: Browsing unit catalog, adding to army lists
+ * - FactionsPage: Listing units per faction
+ * - UnitDetailPage: Full datasheet view for a single unit
+ *
+ * DATA IS STATIC — these are not fetched from Firestore.
+ * New factions/units are added by extending the arrays and maps below.
+ *
+ * To add a new faction:
+ * 1. Create a `<factionName>Units: Unit[]` array with unit definitions
+ * 2. Add it to the `factionUnits` map
+ * 3. Optionally add allied units to `alliedUnits` and `alliedFactionNames`
+ */
+
+/** A weapon profile (ranged or melee) on a unit datasheet. */
 export interface WeaponProfile {
-  name: string;
-  range: string;       // e.g. "24\"" or "Melee"
-  attacks: string;
-  skill: string;       // BS or WS, e.g. "3+"
-  strength: number;
-  ap: number;
-  damage: string;
-  keywords?: string[];
+  name: string;          // Weapon name, e.g. "Bolt rifle"
+  range: string;         // Range value, e.g. "24\"" or "Melee"
+  attacks: string;       // Number of attacks, e.g. "2" or "D6"
+  skill: string;         // BS or WS, e.g. "3+" or "N/A" for auto-hitting
+  strength: number;      // Strength value
+  ap: number;            // Armour Penetration modifier (negative = better)
+  damage: string;        // Damage per attack, e.g. "1" or "D6"
+  keywords?: string[];   // Weapon special rules, e.g. ["Melta 2", "Heavy"]
 }
 
+/** Core stat line for a unit (movement, toughness, save, wounds, leadership, OC). */
 export interface UnitProfile {
-  movement: string;
-  toughness: number;
-  save: string;
-  wounds: number;
-  leadership: string;
-  oc: number;
+  movement: string;      // Movement distance, e.g. "6\""
+  toughness: number;     // Toughness value
+  save: string;          // Armour save, e.g. "3+"
+  wounds: number;        // Wounds per model
+  leadership: string;    // Leadership value, e.g. "6+"
+  oc: number;            // Objective Control value
 }
 
+/**
+ * A complete unit datasheet definition.
+ * Keywords drive categorization in the Army Builder:
+ * - "Character" → Characters section
+ * - "Battleline" → Battleline section
+ * - "Epic Hero" → Unique restriction (only one copy per army)
+ * - "Dedicated Transport" → Transports section
+ *
+ * The `points` array supports multi-size units (e.g. 5 models = 80pts, 10 = 160pts).
+ */
 export interface Unit {
-  id: string;
-  name: string;
-  faction: string;
-  keywords: string[];
-  profile: UnitProfile;
-  rangedWeapons: WeaponProfile[];
-  meleeWeapons: WeaponProfile[];
-  abilities: string[];
-  points: { models: number; cost: number }[];
-  modelCount: { min: number; max: number };
+  id: string;                                    // Unique slug ID, e.g. "intercessor-squad"
+  name: string;                                  // Display name
+  faction: string;                               // Faction display name, e.g. "Ultramarines"
+  keywords: string[];                            // All unit keywords (drive categorization + rules)
+  profile: UnitProfile;                          // Core stat line
+  rangedWeapons: WeaponProfile[];                // Ranged weapon options
+  meleeWeapons: WeaponProfile[];                 // Melee weapon options
+  abilities: string[];                           // Special abilities text
+  points: { models: number; cost: number }[];    // Point costs per model count option
+  modelCount: { min: number; max: number };      // Valid model count range
 }
 
+// ══════════════════════════════════════════════════════════════
+// FACTION UNIT ARRAYS — One array per faction with unit datasheets
+// ══════════════════════════════════════════════════════════════
+
+/** Ultramarines faction units (Space Marines chapter). */
 export const ultramarinesUnits: Unit[] = [
   {
     id: "intercessor-squad",
@@ -214,6 +248,11 @@ export const ultramarinesUnits: Unit[] = [
   },
 ];
 
+// ══════════════════════════════════════════════════════════════
+// ALLIED UNIT ARRAYS — Units from allied factions that can be taken
+// ══════════════════════════════════════════════════════════════
+
+/** Imperial Knights allied units available to Imperium factions. */
 export const imperiumAlliedUnits: Unit[] = [
   {
     id: "armiger-warglaive",
@@ -282,6 +321,7 @@ export const imperiumAlliedUnits: Unit[] = [
   },
 ];
 
+/** Emperor's Children faction units (Chaos Space Marines). */
 export const emperorsChildrenUnits: Unit[] = [
   {
     id: "noise-marines",
@@ -389,6 +429,7 @@ export const emperorsChildrenUnits: Unit[] = [
   },
 ];
 
+/** Chaos Knights allied units available to Chaos factions. */
 export const chaosKnightsAlliedUnits: Unit[] = [
   {
     id: "war-dog-stalker",
@@ -456,16 +497,23 @@ export const chaosKnightsAlliedUnits: Unit[] = [
   },
 ];
 
+// ══════════════════════════════════════════════════════════════
+// FACTION LOOKUP MAPS — Used by ArmyBuilderPage and FactionsPage
+// ══════════════════════════════════════════════════════════════
+
+/** Maps faction display names to their available unit arrays. */
 export const factionUnits: Record<string, Unit[]> = {
   "Ultramarines": ultramarinesUnits,
   "Emperor's Children": emperorsChildrenUnits,
 };
 
+/** Maps faction display names to their available allied unit arrays. */
 export const alliedUnits: Record<string, Unit[]> = {
   "Ultramarines": imperiumAlliedUnits,
   "Emperor's Children": chaosKnightsAlliedUnits,
 };
 
+/** Maps faction display names to the label shown for their allied section. */
 export const alliedFactionNames: Record<string, string> = {
   "Ultramarines": "Imperium Allies",
   "Emperor's Children": "Chaos Knights Allies",

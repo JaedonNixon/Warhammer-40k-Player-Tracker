@@ -1,3 +1,14 @@
+/*
+ * App.css — Global styles & layout
+ *
+ * Contains: CSS reset, body/font base, navbar, page headers,
+ * players grid, filters bar, admin badge, mod badge, scrollbar,
+ * not-found state, footer.
+ *
+ * Imported by: App.tsx (applies globally)
+ * Font: Cinzel (serif, loaded via Google Fonts in index.html)
+ * Color palette: dark backgrounds (#1a1a1f), gold accents (#ffd600)
+ */
 /* === RESET & BASE === */
 *,
 *::before,
@@ -199,6 +210,14 @@ a {
   padding: 3px 8px;
   border-radius: 4px;
   letter-spacing: 2px;
+}
+
+.mod-badge {
+  color: #4fc3f7;
+  background: rgba(79, 195, 247, 0.15);
+  border-color: rgba(79, 195, 247, 0.3);
+  cursor: default;
+  text-decoration: none;
 }
 
 .logout-button {

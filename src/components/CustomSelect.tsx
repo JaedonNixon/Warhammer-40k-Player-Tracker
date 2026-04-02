@@ -1,3 +1,17 @@
+/**
+ * CustomSelect.tsx — Styled dropdown select replacement
+ *
+ * Used in: GameHistoryPage (sort/filter dropdowns), ArmyBuilderPage
+ *
+ * Replaces the native <select> with a custom dropdown that matches the
+ * app's dark/gold theme. Features:
+ *   - Keyboard-friendly button trigger
+ *   - Click-outside-to-close (via mousedown listener on document)
+ *   - Hover highlighting with gold accent
+ *   - Active option highlighted in gold
+ *
+ * Styled by: styles/CustomSelect.css
+ */
 import React, { useState, useRef, useEffect } from "react";
 import "../styles/CustomSelect.css";
 
@@ -13,6 +27,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, value, onChange, p
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
+  // Close dropdown when user clicks outside the wrapper
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {

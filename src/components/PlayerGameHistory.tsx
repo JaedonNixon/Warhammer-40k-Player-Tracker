@@ -1,3 +1,19 @@
+/**
+ * PlayerGameHistory.tsx — List of a player's past games
+ *
+ * Used in: PlayerProfile (embedded in the "Battle History" section)
+ *
+ * Displays a vertical list of game cards, each showing:
+ *   - Result badge (VICTORY / DEFEAT / DRAW) with color-coded left border
+ *   - Date and final turn number
+ *   - Matchup: player name/army vs opponent name/army
+ *   - Final score (extracted from the last turn in turnScores[])
+ *
+ * Each card links to /history/:gameId (GameDetailPage) for full details.
+ * Games are sorted newest-first.
+ *
+ * Data source: useGames() hook (fetches & resolves names from Firestore)
+ */
 import React from "react";
 import { Link } from "react-router-dom";
 import { Player } from "../types";
@@ -13,15 +29,19 @@ interface PlayerGameHistoryProps {
 const PlayerGameHistory: React.FC<PlayerGameHistoryProps> = ({ player, theme }) => {
   const { getAllGames } = useGames();
   const allGames = getAllGames();
+
+  // Filter to only this player's games, sorted newest-first
   const playerGames = allGames.filter(
     (g) => g.player1Id === player.id || g.player2Id === player.id
   ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
+  /** Extract final cumulative score from the last entry in turnScores[] */
   const getFinalScores = (game: Game) => {
     const lastTurn = game.turnScores[game.turnScores.length - 1];
     return lastTurn ? { p1: lastTurn.player1Points, p2: lastTurn.player2Points } : { p1: 0, p2: 0 };
   };
 
+  /** Determine this player's result for a given game */
   const getResult = (game: Game): "win" | "loss" | "draw" => {
     if (game.winner === "draw") return "draw";
     if (game.player1Id === player.id && game.winner === "player1") return "win";

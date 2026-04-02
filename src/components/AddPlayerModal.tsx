@@ -1,3 +1,23 @@
+/**
+ * AddPlayerModal.tsx — Modal dialog for creating a new player
+ *
+ * Used in: PlayersPage (admin-only "Add Player" button)
+ *
+ * Flow:
+ *   1. Admin enters player name
+ *   2. Selects an avatar emoji
+ *   3. Selects one or more factions (multi-select toggle list)
+ *   4. On submit:
+ *      a. Generates a slug ID from the name (lowercase, hyphens)
+ *      b. Auto-increments accountId (queries all players for max)
+ *      c. Creates army entries with zeroed stats for each faction
+ *      d. Writes to Firestore "players" collection via setDoc
+ *
+ * The modal uses the same CSS as EditPlayerModal (AddPlayerModal.css).
+ * Callback props: onClose (dismiss), onAdded (trigger data refresh).
+ *
+ * Styled by: styles/AddPlayerModal.css
+ */
 import React, { useState } from "react";
 import { doc, setDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
@@ -9,6 +29,7 @@ interface AddPlayerModalProps {
   onAdded: () => void;
 }
 
+/** All available factions a player can be assigned to (alphabetical) */
 const FACTION_OPTIONS: { label: string; value: Faction }[] = [
   { label: "Adepta Sororitas", value: "sisters-of-battle" },
   { label: "Adeptus Custodes", value: "custodes" },
@@ -46,6 +67,7 @@ const FACTION_OPTIONS: { label: string; value: Faction }[] = [
   { label: "Ynnari", value: "ynnari" },
 ];
 
+/** Emoji choices for player avatar */
 const AVATAR_OPTIONS = ["⚔️", "🛡️", "🗡️", "🏰", "🪓", "🔥", "🐺", "🎯", "🔔", "💀", "🦅", "👑", "⭐", "🌙", "🔱"];
 
 const AddPlayerModal: React.FC<AddPlayerModalProps> = ({ onClose, onAdded }) => {
@@ -88,7 +110,7 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({ onClose, onAdded }) => 
         faction: f.value,
       }));
 
-      // Determine next accountId
+      // Auto-increment accountId: find the highest existing ID and add 1
       const playersSnap = await getDocs(collection(db, "players"));
       let maxAccountId = 0;
       playersSnap.forEach((doc) => {

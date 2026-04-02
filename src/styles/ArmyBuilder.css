@@ -1,3 +1,11 @@
+/*
+ * ArmyBuilder.css — Interactive army list builder
+ *
+ * Covers: two-panel layout (catalog + army list), unit catalog with
+ * category grouping, datasheet expansion (stats/weapons/abilities),
+ * quick-add buttons, army entries, point totals.
+ * Imported by: pages/ArmyBuilderPage.tsx
+ */
 .army-builder-page {
   max-width: 1400px;
   margin: 0 auto;

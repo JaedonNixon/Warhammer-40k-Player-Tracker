@@ -1,3 +1,13 @@
+/**
+ * hooks/useTournaments.ts — Fetches tournament data from Firestore.
+ *
+ * Provides:
+ * - `tournaments`: Array of all Tournament objects from Firestore
+ * - `getTournamentStandings(tournament)`: Computes Swiss standings for a tournament
+ * - `loading`: Whether data is still being fetched
+ *
+ * Used by: TournamentPage, GameHistoryPage (tournaments tab), HomePage (stat count).
+ */
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";

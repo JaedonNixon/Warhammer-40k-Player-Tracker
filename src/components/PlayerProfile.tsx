@@ -1,3 +1,21 @@
+/**
+ * PlayerProfile.tsx — Full player detail view
+ *
+ * Used in: PlayerDetailPage
+ *
+ * Layout (top to bottom):
+ *   1. Faction background image (full-width, behind banner)
+ *   2. Edit button (visible only when isAdmin + onEdit callback provided)
+ *   3. Profile banner — name, nickname, bio, join date, account ID
+ *   4. Stats overview — Total Games, Victories, Defeats, Draws, Win Rate
+ *   5. Content grid (2 columns):
+ *      - Left:  Battle History (PlayerGameHistory component)
+ *      - Right: Army Roster (ArmyList component)
+ *
+ * Theme colors dynamically match the player's primary faction.
+ *
+ * Styled by: styles/PlayerProfile.css
+ */
 import React from "react";
 import { Player } from "../types";
 import { usePlayers } from "../hooks/usePlayers";

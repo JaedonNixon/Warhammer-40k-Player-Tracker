@@ -1,3 +1,20 @@
+/**
+ * GameHistoryPage.tsx — Battle Archives with two tabs
+ *
+ * Route: /history
+ *
+ * Tab 1: "Matches" — chronological list of all games (newest first)
+ *   Each game card shows date, turn count, matchups with faction art,
+ *   final scores, and VICTORY badge. Links to /history/:gameId.
+ *
+ * Tab 2: "Tournaments" — Swiss-format tournament viewer
+ *   Dropdown to select tournament. Shows:
+ *   - Final standings table (rank, W/L/D, points, score differential)
+ *   - Round-by-round match results with faction art
+ *
+ * Data sources: useGames (match list), useTournaments (tournament list)
+ * Styled by: styles/GameHistory.css, styles/Tournament.css
+ */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Game } from "../data/games";

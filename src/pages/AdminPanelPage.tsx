@@ -1,3 +1,21 @@
+/**
+ * AdminPanelPage.tsx — Admin-only control panel
+ *
+ * Route: /admin (guarded — redirects to / if not the hardcoded admin)
+ *
+ * Only accessible by the permanent admin (jaedonnixon19@gmail.com).
+ * Mods do NOT have access to this page.
+ *
+ * Contains one section:
+ *   - Mod Management: list current mods, add new ones by email,
+ *     remove existing ones.
+ *
+ * Mods are stored in the Firestore "admins" collection where each
+ * doc ID is the mod's email address with content { role: "admin" }.
+ *
+ * Data source: Direct Firestore reads/writes (admins collection)
+ * Styled by: styles/AdminPanel.css
+ */
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { collection, getDocs, doc, setDoc, deleteDoc } from "firebase/firestore";
@@ -5,55 +23,52 @@ import { db } from "../firebase";
 import { Navigate } from "react-router-dom";
 import "../styles/AdminPanel.css";
 
-interface AdminEntry {
+interface ModEntry {
   email: string;
 }
 
 const AdminPanelPage: React.FC = () => {
   const { user, isAdmin } = useAuth();
 
-  const [admins, setAdmins] = useState<AdminEntry[]>([]);
-  const [newAdminEmail, setNewAdminEmail] = useState("");
-  const [adminError, setAdminError] = useState("");
-  const [adminSuccess, setAdminSuccess] = useState("");
+  const [mods, setMods] = useState<ModEntry[]>([]);
+  const [newModEmail, setNewModEmail] = useState("");
+  const [modError, setModError] = useState("");
+  const [modSuccess, setModSuccess] = useState("");
 
   useEffect(() => {
-    const fetchAdmins = async () => {
+    const fetchMods = async () => {
       const snapshot = await getDocs(collection(db, "admins"));
-      setAdmins(snapshot.docs.map((d) => ({ email: d.id })));
+      setMods(snapshot.docs.map((d) => ({ email: d.id })));
     };
-    if (isAdmin) fetchAdmins();
+    if (isAdmin) fetchMods();
   }, [isAdmin]);
 
+  // Only the hardcoded admin can access this page — mods are redirected
   if (!isAdmin) return <Navigate to="/" replace />;
 
-  const handleAddAdmin = async () => {
-    setAdminError("");
-    setAdminSuccess("");
-    const email = newAdminEmail.trim().toLowerCase();
+  const handleAddMod = async () => {
+    setModError("");
+    setModSuccess("");
+    const email = newModEmail.trim().toLowerCase();
     if (!email || !email.includes("@")) {
-      setAdminError("Enter a valid email.");
+      setModError("Enter a valid email.");
       return;
     }
-    if (admins.some((a) => a.email === email)) {
-      setAdminError("Already an admin.");
+    if (mods.some((m) => m.email === email)) {
+      setModError("Already a mod.");
       return;
     }
     await setDoc(doc(db, "admins", email), { role: "admin" });
-    setAdmins([...admins, { email }]);
-    setNewAdminEmail("");
-    setAdminSuccess(`${email} added as admin.`);
+    setMods([...mods, { email }]);
+    setNewModEmail("");
+    setModSuccess(`${email} added as mod.`);
   };
 
-  const handleRemoveAdmin = async (email: string) => {
-    if (email === user?.email) {
-      setAdminError("You can't remove yourself.");
-      return;
-    }
-    if (!window.confirm(`Remove ${email} as admin?`)) return;
+  const handleRemoveMod = async (email: string) => {
+    if (!window.confirm(`Remove ${email} as mod?`)) return;
     await deleteDoc(doc(db, "admins", email));
-    setAdmins(admins.filter((a) => a.email !== email));
-    setAdminSuccess(`${email} removed.`);
+    setMods(mods.filter((m) => m.email !== email));
+    setModSuccess(`${email} removed.`);
   };
 
   return (
@@ -65,40 +80,39 @@ const AdminPanelPage: React.FC = () => {
         <p className="page-description">Manage your Warhammer 40K tracker</p>
       </header>
 
-      {/* Admin Management */}
+      {/* Mod Management */}
       <section className="admin-section">
-        <h2 className="admin-section-title">🔑 Admin Accounts</h2>
+        <h2 className="admin-section-title">🔑 Moderator Accounts</h2>
         <div className="admin-list">
-          {admins.map((a) => (
-            <div key={a.email} className="admin-list-item">
-              <span className="admin-email">{a.email}</span>
-              {a.email === user?.email ? (
-                <span className="admin-you-badge">You</span>
-              ) : (
-                <button
-                  className="admin-remove-btn"
-                  onClick={() => handleRemoveAdmin(a.email)}
-                >
-                  Remove
-                </button>
-              )}
+          {mods.map((m) => (
+            <div key={m.email} className="admin-list-item">
+              <span className="admin-email">{m.email}</span>
+              <button
+                className="admin-remove-btn"
+                onClick={() => handleRemoveMod(m.email)}
+              >
+                Remove
+              </button>
             </div>
           ))}
+          {mods.length === 0 && (
+            <p style={{ color: '#aaa', padding: '12px 0' }}>No moderators assigned yet.</p>
+          )}
         </div>
         <div className="admin-add-row">
           <input
             type="email"
             placeholder="Email address"
-            value={newAdminEmail}
-            onChange={(e) => setNewAdminEmail(e.target.value)}
+            value={newModEmail}
+            onChange={(e) => setNewModEmail(e.target.value)}
             className="admin-input"
           />
-          <button className="admin-add-btn" onClick={handleAddAdmin}>
-            Add Admin
+          <button className="admin-add-btn" onClick={handleAddMod}>
+            Add Mod
           </button>
         </div>
-        {adminError && <p className="admin-error">{adminError}</p>}
-        {adminSuccess && <p className="admin-success">{adminSuccess}</p>}
+        {modError && <p className="admin-error">{modError}</p>}
+        {modSuccess && <p className="admin-success">{modSuccess}</p>}
       </section>
     </div>
   );

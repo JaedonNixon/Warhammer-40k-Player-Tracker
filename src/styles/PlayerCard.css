@@ -1,3 +1,10 @@
+/*
+ * PlayerCard.css — Compact player summary card in roster grid
+ *
+ * Covers: card link hover, rank badge, avatar, name/nickname,
+ * W/L/D stat row, win-rate bar, footer info, theme stripe.
+ * Imported by: components/PlayerCard.tsx
+ */
 .player-card-link {
   display: block;
   text-decoration: none;

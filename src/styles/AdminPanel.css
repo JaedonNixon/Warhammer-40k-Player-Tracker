@@ -1,3 +1,10 @@
+/*
+ * AdminPanel.css — Admin-only control panel
+ *
+ * Covers: section cards, mod list items, add-mod input row,
+ * error/success messages.
+ * Imported by: pages/AdminPanelPage.tsx
+ */
 .admin-panel-page {
   max-width: 1000px;
   margin: 0 auto;

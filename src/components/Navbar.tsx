@@ -1,3 +1,15 @@
+/**
+ * Navbar.tsx — Top navigation bar
+ *
+ * Persistent across all routes. Features:
+ *   - Brand link ("HAM TRACKER") → Home
+ *   - Route links with active-state highlighting via useLocation()
+ *   - Hamburger toggle for mobile (controlled by `menuOpen` state)
+ *   - Admin badge (visible only when useAuth().isAdmin is true)
+ *   - Logout button (calls Firebase signOut directly)
+ *
+ * Styled by: styles/App.css (navbar section)
+ */
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { signOut } from "firebase/auth";
@@ -5,12 +17,14 @@ import { auth } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 
 const Navbar: React.FC = () => {
-  const location = useLocation();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const { isAdmin } = useAuth();
+  const location = useLocation();           // Current URL for active-link highlighting
+  const [menuOpen, setMenuOpen] = useState(false); // Mobile hamburger menu state
+  const { isAdmin, isMod } = useAuth();      // Admin = permanent owner, Mod = elevated user
 
+  /** Returns true if the given path matches current URL (exact match) */
   const isActive = (path: string) => location.pathname === path;
 
+  /** Signs the user out via Firebase Auth — App.tsx will redirect to LoginPage */
   const handleLogout = () => {
     signOut(auth);
   };
@@ -75,6 +89,7 @@ const Navbar: React.FC = () => {
           </Link>
           <div className="nav-auth">
             {isAdmin && <Link to="/admin" className="admin-badge" onClick={() => setMenuOpen(false)}>ADMIN</Link>}
+            {!isAdmin && isMod && <span className="admin-badge mod-badge">MOD</span>}
             <button className="logout-button" onClick={handleLogout}>
               Logout
             </button>

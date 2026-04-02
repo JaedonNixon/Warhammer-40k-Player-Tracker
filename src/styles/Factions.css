@@ -1,3 +1,10 @@
+/*
+ * Factions.css — Faction browser & unit detail pages
+ *
+ * Covers: faction selector, unit card grid, unit detail datasheet
+ * (stat line, weapon tables, abilities, keywords, points).
+ * Imported by: pages/FactionsPage.tsx, pages/UnitDetailPage.tsx
+ */
 /* ===========================
    FACTIONS PAGE
    =========================== */

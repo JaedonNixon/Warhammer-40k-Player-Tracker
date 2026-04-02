@@ -1,3 +1,9 @@
+/*
+ * HomePage.css — Styles for the landing page / dashboard
+ *
+ * Sections: hero (stats), recent battles list, game cards
+ * Imported by: pages/HomePage.tsx
+ */
 /* === HERO === */
 .hero-section {
   text-align: center;

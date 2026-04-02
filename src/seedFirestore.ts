@@ -1,7 +1,14 @@
-// One-time script to seed Firestore with existing local data.
-// Run with: npx ts-node --compiler-options '{"module":"commonjs"}' src/seedFirestore.ts
-// Or via the browser — see instructions below.
-
+/**
+ * seedFirestore.ts — One-time Firestore seeding script (browser-side)
+ *
+ * Uploads the local TypeScript seed data (players, games, tournaments)
+ * from src/data/ into the live Firestore database.
+ *
+ * Run with: npx ts-node --compiler-options '{"module":"commonjs"}' src/seedFirestore.ts
+ *
+ * WARNING: This overwrites existing documents by ID. Only run once for
+ * initial setup, or to reset data to the seed state.
+ */
 import { db } from "./firebase";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { players } from "./data/players";

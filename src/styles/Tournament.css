@@ -1,3 +1,10 @@
+/*
+ * Tournament.css — Tournament standings & round results
+ *
+ * Covers: standings table (rank/player/W-L-D/pts/diff),
+ * Swiss match cards with faction art slots, round sections.
+ * Imported by: pages/TournamentPage.tsx, pages/GameHistoryPage.tsx
+ */
 /* === TOURNAMENT PAGE === */
 .tournament-page {
   max-width: 900px;

@@ -1,3 +1,18 @@
+/**
+ * FactionsPage.tsx — Browse factions and their available units
+ *
+ * Route: /factions
+ *
+ * Simple faction browser:
+ *   1. Dropdown to select a faction from all available in data/units.ts
+ *   2. Grid of unit cards showing name, points, core stats, and keywords
+ *   3. Each card links to /factions/:faction/:unitId (UnitDetailPage)
+ *
+ * This is a read-only reference page — no editing capabilities.
+ *
+ * Data source: data/units.ts (factionUnits map)
+ * Styled by: styles/Factions.css
+ */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { factionUnits } from "../data/units";

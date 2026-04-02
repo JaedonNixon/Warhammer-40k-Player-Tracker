@@ -1,3 +1,14 @@
+/**
+ * PlayerDetailPage.tsx — Full player profile view
+ *
+ * Route: /players/:id
+ *
+ * Looks up the player by their slug ID from the URL param.
+ * Renders PlayerProfile with the full stat breakdown, battle history, and army roster.
+ * Admin users see an "Edit Player" button that opens EditPlayerModal.
+ *
+ * If the player is not found (e.g. deleted or bad URL), shows a "lost to the Warp" message.
+ */
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { usePlayers } from "../hooks/usePlayers";
@@ -8,7 +19,7 @@ import EditPlayerModal from "../components/EditPlayerModal";
 const PlayerDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { getPlayer, loading } = usePlayers();
-  const { isAdmin } = useAuth();
+  const { isAdmin, isMod } = useAuth();
   const navigate = useNavigate();
   const [showEditModal, setShowEditModal] = useState(false);
 
@@ -35,10 +46,11 @@ const PlayerDetailPage: React.FC = () => {
           ← Back to Roster
         </Link>
       </div>
-      <PlayerProfile player={player} isAdmin={isAdmin} onEdit={() => setShowEditModal(true)} />
+      <PlayerProfile player={player} isAdmin={isMod} onEdit={() => setShowEditModal(true)} />
       {showEditModal && (
         <EditPlayerModal
           player={player}
+          canDelete={isAdmin}
           onClose={() => setShowEditModal(false)}
           onSaved={() => window.location.reload()}
           onDeleted={() => navigate('/players')}

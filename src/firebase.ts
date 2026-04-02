@@ -1,3 +1,15 @@
+/**
+ * firebase.ts — Firebase SDK initialization
+ *
+ * Initializes the Firebase app with the "ham-tracker" project config
+ * and exports the Firestore database and Auth instances.
+ *
+ * All other files that need Firestore or Auth import from here:
+ *   import { db, auth } from "../firebase";
+ *
+ * Firebase project: ham-tracker (Spark/free plan)
+ * Services used: Firestore (database), Auth (email/password)
+ */
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
