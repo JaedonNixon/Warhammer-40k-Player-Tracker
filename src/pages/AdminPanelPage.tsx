@@ -23,52 +23,71 @@ import { db } from "../firebase";
 import { Navigate } from "react-router-dom";
 import "../styles/AdminPanel.css";
 
-interface ModEntry {
+/** A registered account (from the "users" Firestore collection). */
+interface UserEntry {
   email: string;
+  lastLogin: string;
+  isMod: boolean;
 }
+
+const PERMANENT_ADMIN_EMAIL = "jaedonnixon19@gmail.com";
 
 const AdminPanelPage: React.FC = () => {
   const { user, isAdmin } = useAuth();
 
-  const [mods, setMods] = useState<ModEntry[]>([]);
-  const [newModEmail, setNewModEmail] = useState("");
-  const [modError, setModError] = useState("");
+  const [users, setUsers] = useState<UserEntry[]>([]);
+  const [loadingUsers, setLoadingUsers] = useState(true);
   const [modSuccess, setModSuccess] = useState("");
 
   useEffect(() => {
-    const fetchMods = async () => {
-      const snapshot = await getDocs(collection(db, "admins"));
-      setMods(snapshot.docs.map((d) => ({ email: d.id })));
+    const fetchUsersAndMods = async () => {
+      // Fetch all registered accounts and all current mods in parallel
+      const [usersSnap, modsSnap] = await Promise.all([
+        getDocs(collection(db, "users")),
+        getDocs(collection(db, "admins")),
+      ]);
+
+      const modEmails = new Set(modsSnap.docs.map((d) => d.id));
+
+      const userList: UserEntry[] = usersSnap.docs.map((d) => {
+        const data = d.data();
+        return {
+          email: d.id,
+          lastLogin: data.lastLogin || "",
+          isMod: modEmails.has(d.id),
+        };
+      });
+
+      // Sort: admin first, then mods, then regular users (alphabetical within each group)
+      userList.sort((a, b) => {
+        const aIsAdmin = a.email === PERMANENT_ADMIN_EMAIL;
+        const bIsAdmin = b.email === PERMANENT_ADMIN_EMAIL;
+        if (aIsAdmin !== bIsAdmin) return aIsAdmin ? -1 : 1;
+        if (a.isMod !== b.isMod) return a.isMod ? -1 : 1;
+        return a.email.localeCompare(b.email);
+      });
+
+      setUsers(userList);
+      setLoadingUsers(false);
     };
-    if (isAdmin) fetchMods();
+    if (isAdmin) fetchUsersAndMods();
   }, [isAdmin]);
 
   // Only the hardcoded admin can access this page — mods are redirected
   if (!isAdmin) return <Navigate to="/" replace />;
 
-  const handleAddMod = async () => {
-    setModError("");
+  const handleToggleMod = async (email: string, currentlyMod: boolean) => {
     setModSuccess("");
-    const email = newModEmail.trim().toLowerCase();
-    if (!email || !email.includes("@")) {
-      setModError("Enter a valid email.");
-      return;
+    if (currentlyMod) {
+      if (!window.confirm(`Remove mod status from ${email}?`)) return;
+      await deleteDoc(doc(db, "admins", email));
+      setUsers(users.map((u) => u.email === email ? { ...u, isMod: false } : u));
+      setModSuccess(`${email} is no longer a mod.`);
+    } else {
+      await setDoc(doc(db, "admins", email), { role: "admin" });
+      setUsers(users.map((u) => u.email === email ? { ...u, isMod: true } : u));
+      setModSuccess(`${email} is now a mod.`);
     }
-    if (mods.some((m) => m.email === email)) {
-      setModError("Already a mod.");
-      return;
-    }
-    await setDoc(doc(db, "admins", email), { role: "admin" });
-    setMods([...mods, { email }]);
-    setNewModEmail("");
-    setModSuccess(`${email} added as mod.`);
-  };
-
-  const handleRemoveMod = async (email: string) => {
-    if (!window.confirm(`Remove ${email} as mod?`)) return;
-    await deleteDoc(doc(db, "admins", email));
-    setMods(mods.filter((m) => m.email !== email));
-    setModSuccess(`${email} removed.`);
   };
 
   return (
@@ -80,39 +99,44 @@ const AdminPanelPage: React.FC = () => {
         <p className="page-description">Manage your Warhammer 40K tracker</p>
       </header>
 
-      {/* Mod Management */}
+      {/* All Registered Accounts */}
       <section className="admin-section">
-        <h2 className="admin-section-title">🔑 Moderator Accounts</h2>
-        <div className="admin-list">
-          {mods.map((m) => (
-            <div key={m.email} className="admin-list-item">
-              <span className="admin-email">{m.email}</span>
-              <button
-                className="admin-remove-btn"
-                onClick={() => handleRemoveMod(m.email)}
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          {mods.length === 0 && (
-            <p style={{ color: '#aaa', padding: '12px 0' }}>No moderators assigned yet.</p>
-          )}
-        </div>
-        <div className="admin-add-row">
-          <input
-            type="email"
-            placeholder="Email address"
-            value={newModEmail}
-            onChange={(e) => setNewModEmail(e.target.value)}
-            className="admin-input"
-          />
-          <button className="admin-add-btn" onClick={handleAddMod}>
-            Add Mod
-          </button>
-        </div>
-        {modError && <p className="admin-error">{modError}</p>}
+        <h2 className="admin-section-title">👥 Registered Accounts</h2>
         {modSuccess && <p className="admin-success">{modSuccess}</p>}
+
+        {loadingUsers ? (
+          <p style={{ color: "#aaa", padding: "12px 0" }}>Loading accounts...</p>
+        ) : users.length === 0 ? (
+          <p style={{ color: "#aaa", padding: "12px 0" }}>No accounts found.</p>
+        ) : (
+          <div className="admin-user-list">
+            {users.map((u) => {
+              const isThisAdmin = u.email === PERMANENT_ADMIN_EMAIL;
+              return (
+                <div key={u.email} className="admin-user-item">
+                  <div className="admin-user-info">
+                    <span className="admin-email">{u.email}</span>
+                    <div className="admin-user-badges">
+                      {isThisAdmin && <span className="admin-role-badge admin-badge">ADMIN</span>}
+                      {u.isMod && !isThisAdmin && <span className="admin-role-badge mod-badge">MOD</span>}
+                      {!isThisAdmin && !u.isMod && <span className="admin-role-badge user-badge">USER</span>}
+                    </div>
+                  </div>
+                  <div className="admin-user-actions">
+                    {!isThisAdmin && (
+                      <button
+                        className={u.isMod ? "admin-remove-btn" : "admin-grant-btn"}
+                        onClick={() => handleToggleMod(u.email, u.isMod)}
+                      >
+                        {u.isMod ? "Remove Mod" : "Make Mod"}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </section>
     </div>
   );

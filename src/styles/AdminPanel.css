@@ -243,3 +243,87 @@
   font-size: 0.8rem;
   margin-top: 8px;
 }
+
+/* ── User List (Admin Panel) ── */
+.admin-user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: border-color 0.2s;
+}
+
+.admin-user-item:hover {
+  border-color: rgba(255, 215, 0, 0.15);
+}
+
+.admin-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-user-badges {
+  display: flex;
+  gap: 6px;
+}
+
+.admin-role-badge {
+  font-family: "Cinzel", serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.admin-role-badge.admin-badge {
+  color: #ffd600;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.admin-role-badge.mod-badge {
+  color: #4fc3f7;
+  background: rgba(79, 195, 247, 0.12);
+  border: 1px solid rgba(79, 195, 247, 0.3);
+}
+
+.admin-role-badge.user-badge {
+  color: #888;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-user-actions {
+  flex-shrink: 0;
+}
+
+.admin-grant-btn {
+  font-family: "Cinzel", serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #4fc3f7;
+  background: rgba(79, 195, 247, 0.1);
+  border: 1px solid rgba(79, 195, 247, 0.3);
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.2s;
+}
+
+.admin-grant-btn:hover {
+  background: rgba(79, 195, 247, 0.2);
+}

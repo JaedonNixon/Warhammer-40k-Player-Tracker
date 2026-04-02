@@ -26,7 +26,7 @@
  */
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 
 /** The one hardcoded permanent admin email (case-insensitive comparison). */
@@ -68,6 +68,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(firebaseUser);
       if (firebaseUser && firebaseUser.email) {
         const email = firebaseUser.email.toLowerCase();
+
+        // Track this account in the "users" collection so the admin panel
+        // can list all accounts that have ever signed in.
+        await setDoc(doc(db, "users", email), {
+          email,
+          lastLogin: new Date().toISOString(),
+        }, { merge: true });
 
         // Permanent admin check (hardcoded)
         const adminFlag = email === PERMANENT_ADMIN_EMAIL;
